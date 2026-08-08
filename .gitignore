@@ -1,0 +1,11 @@
+# never version the internal notes: main is not pushed today, but an accidental
+# `git push origin main` must not be able to expose them
+_internal/
+
+# QA scratch and screenshots
+_*.png
+_*.jpg
+_*.mp4
+assets/img/_*
+node_modules/
+.DS_Store

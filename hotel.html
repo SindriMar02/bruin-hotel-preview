@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hótel Grindavík · rooms by the harbour in Grindavík</title>
+<meta name="description" content="Hótel Grindavík on Hafnargata. Double rooms and family rooms with a sleeping loft, self check-in, free parking. Book direct with us.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#C3D2DD" id="themeColor">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="assets/fonts/ClashDisplay-Bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/Switzer-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" as="image" href="assets/img/herbergi.webp">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="br-root">
+
+<div class="br-loader" id="loader" aria-hidden="true">
+  <p class="br-loader__mark" id="loaderMark">THE HOTEL</p>
+  <p class="br-loader__pct" id="loaderPct">0%</p>
+</div>
+
+<header class="br-nav" id="nav">
+  <div class="br-nav__brands">
+    <a class="br-nav__mark" href="index.html">Brúin</a>
+    <span class="br-nav__amp" aria-hidden="true">&amp;</span>
+    <a class="br-nav__mark is-here" href="hotel.html" aria-current="page">The hotel</a>
+    <span class="br-nav__rule" aria-hidden="true"></span>
+    <a class="br-nav__about" href="about.html">About us</a>
+  </div>
+  <nav class="br-nav__links" aria-label="Main menu">
+    <a href="#rooms">Rooms</a>
+    <a href="#in-every-room">In every room</a>
+    <a href="#find-us">Find us</a>
+    <a class="br-nav__cta" href="#book-direct">Book direct</a>
+  </nav>
+  <a class="br-nav__tel" href="tel:+3544267080">426 7080</a>
+  <button class="br-burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="menu">
+    <span></span><span></span>
+  </button>
+</header>
+
+<div class="br-menu" id="menu" hidden>
+  <nav aria-label="Menu">
+    <a href="#rooms"><span>Rooms</span></a>
+    <a href="#in-every-room"><span>In every room</span></a>
+    <a href="#find-us"><span>Find us</span></a>
+    <a href="#book-direct"><span>Book direct</span></a>
+    <a class="br-menu__alt" href="index.html"><span>Restaurant Brúin</span></a>
+    <a class="br-menu__alt" href="about.html"><span>About us</span></a>
+  </nav>
+  <div class="br-menu__foot">
+    <a href="tel:+3544267080">426 7080</a>
+    <a class="br-menu__cta" href="#book-direct">Book direct</a>
+  </div>
+</div>
+
+<main id="top">
+
+<!-- ── 1. hero: same crossing device as Brúin, aimed at the other house ────
+     Their best photograph by a distance (6166x4111 at source), and the only
+     one on either site that was shot by somebody who knew what they were
+     doing. It earns the full-bleed opening. -->
+<section class="br-hero br-hero--wide" id="hero">
+  <div class="br-hero__panel">
+    <img class="br-frame-in br-frame-in--hero" src="assets/img/herbergi.webp"
+      width="2000" height="1333"
+      alt="A family room with a sleeping loft, pale wooden stair, double bed and sofa"
+      fetchpriority="high" decoding="async">
+  </div>
+
+  <svg class="br-hero__wmsvg" id="wmSvg" aria-hidden="true" focusable="false">
+    <text class="br-hero__wmtext" id="wmGlyphText" text-anchor="middle"
+          font-family="Clash, sans-serif" font-weight="700" letter-spacing="-0.018em" font-size="120">THE HOTEL</text>
+  </svg>
+
+  <div class="br-hero__glyph" id="heroGlyph" aria-hidden="true">
+    <div class="br-hero__glyph-in"></div>
+  </div>
+  <svg class="br-hero__defs" aria-hidden="true" focusable="false" width="0" height="0">
+    <defs><clipPath id="wmGlyphs" clipPathUnits="userSpaceOnUse">
+      <!-- the strike is offset on the CLIP, never by moving the layer. Translating
+           the element would drag its crop clip along with it, so the boundary
+           between "on the picture" and "off it" would slide off the picture's
+           own edge by the same few pixels and read as a registration fault. -->
+      <use href="#wmGlyphText" id="wmGlyphUse" x="0" y="0"></use>
+    </clipPath></defs>
+  </svg>
+
+  <div class="br-hero__copy">
+    <div class="br-hero__top">
+      <p class="br-hero__eyebrow" id="wmTop">Hótel Grindavík</p>
+      <span class="br-hero__seam" id="wmSeam" aria-hidden="true"></span>
+    </div>
+
+    <h1 class="br-sr">Hótel Grindavík, rooms by the harbour</h1>
+
+    <div class="br-hero__foot">
+      <p class="br-hero__sub">Self check-in, free parking, and eight kilometres to the Blue Lagoon.</p>
+      <a class="br-btn br-btn--ghost br-btn--onDark" href="#book-direct">Book direct</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── 2. herbergin ───────────────────────────────────────────────────────
+     Prices are the ones they publish themselves as their listing price. -->
+<section class="br-rooms" id="rooms">
+  <div class="br-wrap">
+    <h2 class="br-h2" data-headline>Two kinds of room</h2>
+    <p class="br-rooms__note br-rv">Price per night, in krónur, as we list them.</p>
+
+    <div class="br-rooms__grid">
+      <article class="br-room br-rv">
+        <div class="br-frame"><img class="br-frame-in" data-drift="10"
+          src="assets/img/herbergi.webp" width="2000" height="1333"
+          alt="A family room with a sleeping loft and double bed" loading="lazy" decoding="async"></div>
+        <div class="br-room__body">
+          <h3 class="br-room__h">Family room</h3>
+          <p>A sleeping loft with a stair, a double bed, an extra bed and a sofa. Room for the family on one floor.</p>
+          <p class="br-room__price">42.000<span> kr. per night</span></p>
+          <a class="br-btn br-btn--line" href="#book-direct">Book direct</a>
+        </div>
+      </article>
+
+      <!-- PLACEHOLDER: no photograph of the standard double exists anywhere
+           publicly. Rather than dress the family room up as a second room type,
+           the card carries itself typographically and says so to the owner. -->
+      <article class="br-room br-room--noimg br-rv">
+        <div class="br-room__slot" aria-hidden="true">
+          <span>Photo missing</span>
+          <small>Double room. A photograph is needed from the owners.</small>
+        </div>
+        <div class="br-room__body">
+          <h3 class="br-room__h">Double room</h3>
+          <p>A double bed, private bathroom and desk. The same fittings as the family room.</p>
+          <p class="br-room__price">32.000<span> kr. per night</span></p>
+          <a class="br-btn br-btn--line" href="#book-direct">Book direct</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ── 3. BÓKAÐU BEINT: the section the whole rebuild exists for ───────────
+     Today every room is sold through a platform listing, which takes a cut of
+     every night. A direct form costs nothing to run and the margin on it is
+     whole. This is the argument, made as a working thing rather than a claim. -->
+<section class="br-direct" id="book-direct">
+  <div class="br-wrap br-direct__grid">
+    <div class="br-direct__intro">
+      <p class="br-eyebrow br-rv">Direct contact</p>
+      <h2 class="br-h2" data-headline>Book direct with us</h2>
+      <p class="br-lede br-rv">Send an enquiry and we confirm by email or phone. Same price, no middleman, and you deal with the people who own the house.</p>
+      <ul class="br-direct__list br-rv">
+        <li>Self check-in, arrive when it suits you</li>
+        <li>Free parking at the house</li>
+        <li>Breakfast and dinner at Brúin, the same family</li>
+      </ul>
+    </div>
+
+    <form class="br-form br-rv" id="form" novalidate>
+      <div class="br-field"><label for="f-nafn">Name</label><input id="f-nafn" name="nafn" type="text" autocomplete="name" required></div>
+      <div class="br-field"><label for="f-sim">Phone or email</label><input id="f-sim" name="sim" type="text" autocomplete="tel" required></div>
+      <div class="br-field"><label for="f-koma">Arrival</label><input id="f-koma" name="koma" type="date" required></div>
+      <div class="br-field"><label for="f-fara">Departure</label><input id="f-fara" name="fara" type="date" required></div>
+      <div class="br-field"><label for="f-herb">Room</label>
+        <select id="f-herb" name="herb">
+          <option value="fjolskyldu">Family room, 42.000 kr.</option>
+          <option value="tveggja">Double room, 32.000 kr.</option>
+        </select></div>
+      <div class="br-field"><label for="f-fjoldi">Guests</label><input id="f-fjoldi" name="fjoldi" type="number" min="1" max="6" value="2" required></div>
+      <div class="br-field br-field--wide"><label for="f-ath">Notes</label>
+        <textarea id="f-ath" name="ath" rows="3" placeholder="Arrival time, cot, allergies"></textarea></div>
+      <button class="br-btn br-btn--solid" type="submit">Send enquiry</button>
+      <p class="br-form__msg" id="formMsg" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
+
+<!-- ── 4. innifalið ───────────────────────────────────────────────────────
+     Every item here is listed on their own site. Nothing added. -->
+<section class="br-incl" id="in-every-room">
+  <div class="br-wrap">
+    <h2 class="br-h2" data-headline>In every room</h2>
+    <ul class="br-incl__grid br-rv">
+      <li>Private bathroom</li>
+      <li>Bed linen and towels</li>
+      <li>Desk</li>
+      <li>Flat-screen TV</li>
+      <li>Fridge</li>
+      <li>Sandwich grill</li>
+      <li>Tea kettle</li>
+      <li>Free wifi</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ── 5. hvar ────────────────────────────────────────────────────────── -->
+<section class="br-where" id="find-us">
+  <div class="br-wrap br-where__grid">
+    <div>
+      <h2 class="br-h2" data-headline>Find us</h2>
+      <div class="br-rv">
+        <p class="br-lede">Hafnargata 26, 240 Grindavík. The Blue Lagoon is 8.3 km away and Keflavík airport 27 km.</p>
+        <p class="br-where__hours">Call <a href="tel:+3544267080">426 7080</a> or email <a href="mailto:bruin@simnet.is">bruin@simnet.is</a>.</p>
+      </div>
+    </div>
+    <!-- NOT loading="lazy": see the note on the Brúin page. -->
+    <div class="br-map br-rv">
+      <iframe
+        src="https://www.google.com/maps?q=Hafnargata+26,+240+Grindav%C3%ADk,+Iceland&z=15&output=embed"
+        title="Map: Hafnargata 26, Grindavík"
+        width="600" height="450" style="border:0" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+
+    <address class="br-where__addr br-rv">
+      <a href="https://www.google.com/maps/search/?api=1&query=Hafnargata+26+Grindav%C3%ADk" target="_blank" rel="noopener">Hafnargata 26<br>240 Grindavík</a>
+      <a href="tel:+3544267080">426 7080</a>
+      <a href="mailto:bruin@simnet.is">bruin@simnet.is</a>
+    </address>
+  </div>
+</section>
+
+<!-- ── 6. the other house ─────────────────────────────────────────────── -->
+<section class="br-cross" id="restaurant">
+  <div class="br-cross__media">
+    <div class="br-frame"><img class="br-frame-in" data-drift="14"
+      src="assets/img/supa.webp" width="960" height="960"
+      alt="The Captain's fish soup in a deep bowl with rye bread" loading="lazy" decoding="async"></div>
+  </div>
+  <div class="br-wrap br-cross__grid">
+    <p class="br-eyebrow br-rv">Sama fjölskylda</p>
+    <h2 class="br-h2" data-headline>Restaurant Brúin</h2>
+    <div class="br-rv">
+      <p class="br-lede">Fish off the boats in the harbour, the Captain's fish soup, and seating for 135. In the same house as the rooms.</p>
+      <p>A children's menu and a play corner for the youngest.</p>
+      <a class="br-btn br-btn--line" href="index.html">See the menu</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="br-foot">
+  <div class="br-wrap br-foot__grid">
+    <p class="br-foot__mark">The hotel</p>
+    <div class="br-foot__col">
+      <a href="tel:+3544267080">426 7080</a>
+      <a href="mailto:bruin@simnet.is">bruin@simnet.is</a>
+    </div>
+    <div class="br-foot__col"><p>Hafnargata 26<br>240 Grindavík</p></div>
+    <div class="br-foot__col">
+      <a href="index.html">Restaurant Brúin</a>
+      <a href="hotel.html">Hótel Grindavík</a>
+      <a href="about.html">About us</a>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/vendor/lenis.min.js"></script>
+<script src="assets/vendor/gsap.min.js"></script>
+<script src="assets/vendor/ScrollTrigger.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
