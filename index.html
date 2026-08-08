@@ -3,40 +3,40 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Brúin · seafood restaurant by the harbour in Grindavík</title>
-<meta name="description" content="Restaurant Brúin at Hafnargata 26 in Grindavík. Fish dishes, the Captain's fish soup, seating for 135, a children's corner and a groups menu.">
+<title>Brúin &amp; Hótel Grindavík · one family, two houses by the harbour</title>
+<meta name="description" content="One family, two houses by the harbour in Grindavík. Restaurant Brúin since 2013 and Hótel Grindavík since 2022, at Hafnargata 26.">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#C3D2DD" id="themeColor">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<!-- raster twin: Safari ignores SVG favicons entirely and would fall back to
+     the ORIGIN root icon, i.e. show another client's mark in this tab -->
+<link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/img/favicon-180.png">
 <link rel="preload" href="assets/fonts/ClashDisplay-Bold.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/Switzer-Regular.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" as="image" href="assets/img/husid-hero.webp">
+<link rel="preload" as="image" href="assets/img/husid-full.webp">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body class="br-root">
 
-<!-- ── preloader: real progress, once per session, ?loader forces it ────── -->
 <div class="br-loader" id="loader" aria-hidden="true">
-  <p class="br-loader__mark" id="loaderMark">BRÚIN</p>
+  <p class="br-loader__mark" id="loaderMark">HAFNARGATA 26</p>
   <p class="br-loader__pct" id="loaderPct">0%</p>
 </div>
 
 <header class="br-nav" id="nav">
-  <!-- the two houses are one family and one booking decision. Saying so in the
-       nav is the cheapest cross-sell on the site: the guest eating fish soup at
-       eight is the same person who needs a bed. -->
   <div class="br-nav__brands">
-    <a class="br-nav__mark is-here" href="index.html" aria-current="page">Brúin</a>
+    <a class="br-nav__mark" href="restaurant.html">Brúin</a>
     <span class="br-nav__amp" aria-hidden="true">&amp;</span>
     <a class="br-nav__mark" href="hotel.html">The hotel</a>
     <span class="br-nav__rule" aria-hidden="true"></span>
-    <a class="br-nav__about" href="about.html">About us</a>
+    <a class="br-nav__about is-here" href="index.html" aria-current="page">About us</a>
   </div>
   <nav class="br-nav__links" aria-label="Main menu">
-    <a href="#menu">Menu</a>
-    <a href="#the-house">The house</a>
-    <a href="#find-us">Find us</a>
-    <a class="br-nav__cta" href="#book">Book a table</a>
+    <a href="#choose">The two houses</a>
+    <a href="#our-story">Our story</a>
+        <a href="#find-us">Find us</a>
+    <a class="br-nav__cta" href="restaurant.html#book">Book a table</a>
   </nav>
   <a class="br-nav__tel" href="tel:+3544267080">426 7080</a>
   <button class="br-burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="menu">
@@ -46,242 +46,159 @@
 
 <div class="br-menu" id="menu" hidden>
   <nav aria-label="Menu">
-    <a href="#open-again"><span>Open again</span></a>
-    <a href="#menu"><span>Menu</span></a>
-    <a href="#the-house"><span>The house</span></a>
+    <a href="#choose"><span>The two houses</span></a>
+    <a href="#our-story"><span>Our story</span></a>
     <a href="#find-us"><span>Find us</span></a>
-    <a href="#book"><span>Book a table</span></a>
+    <a class="br-menu__alt" href="restaurant.html"><span>Restaurant Brúin</span></a>
     <a class="br-menu__alt" href="hotel.html"><span>Hótel Grindavík</span></a>
-    <a class="br-menu__alt" href="about.html"><span>About us</span></a>
   </nav>
   <div class="br-menu__foot">
     <a href="tel:+3544267080">426 7080</a>
-    <a class="br-menu__cta" href="#book">Book a table</a>
+    <a class="br-menu__cta" href="restaurant.html#book">Book a table</a>
   </div>
 </div>
 
 <main id="top">
 
-<!-- ── 1. hero: the roofline seam births the name ───────────────────────── -->
-<section class="br-hero" id="hero">
-  <!-- the photograph is a CENTRED CROP, not full bleed: the wordmark crosses it,
-       and the crossing is the whole point of the hero -->
-  <div class="br-hero__panel">
-    <img class="br-frame-in br-frame-in--hero" src="assets/img/husid-hero.webp"
-      width="1800" height="782"
-      alt="Restaurant Brúin, a red-clad house by the harbour in Grindavík"
-      fetchpriority="high" decoding="async">
-  </div>
+<h1 class="br-sr">Brúin and Hótel Grindavík, Hafnargata 26 in Grindavík</h1>
 
-  <!-- the paper letters. SVG, not HTML text, so the very same <text> node can
-       also serve as the clip path below — see the three-layer note in the CSS -->
-  <svg class="br-hero__wmsvg" id="wmSvg" aria-hidden="true" focusable="false">
-    <text class="br-hero__wmtext" id="wmGlyphText" text-anchor="middle"
-          font-family="Clash, sans-serif" font-weight="700" letter-spacing="-0.018em" font-size="120">BRÚIN</text>
-  </svg>
+<!-- ── 1. THE CHOICE ──────────────────────────────────────────────────────
+     Two businesses share this address, and a visitor arriving cold does not yet
+     know which one they came for. Landing them straight in the restaurant makes
+     the hotel invisible to exactly the person most likely to need a bed. So the
+     first thing on the site is the fork, not a sales pitch: two doors, equal
+     weight, each a real photograph of what is behind it.
+     Both doors are plain <a> elements wrapping the whole panel, so this works
+     with no JS, on a keyboard, and for a screen reader reading two links. -->
+<section class="br-doors" id="choose">
+  <a class="br-door" href="restaurant.html">
+    <div class="br-door__media">
+      <img src="assets/img/supa.webp" width="960" height="960"
+        alt="" loading="eager" decoding="async">
+    </div>
+    <div class="br-door__body">
+      <p class="br-door__eyebrow">Eat</p>
+      <h2 class="br-door__h">Brúin</h2>
+      <p class="br-door__sub">Fish off the boats in the harbour, the Captain's fish soup, and seating for 135.</p>
+      <span class="br-door__go">See the menu</span>
+    </div>
+  </a>
+  <a class="br-door" href="hotel.html">
+    <div class="br-door__media">
+      <img src="assets/img/herbergi.webp" width="2000" height="1333"
+        alt="" loading="eager" decoding="async">
+    </div>
+    <div class="br-door__body">
+      <p class="br-door__eyebrow">Stay</p>
+      <h2 class="br-door__h">The hotel</h2>
+      <p class="br-door__sub">Double and family rooms with a sleeping loft, self check-in, eight kilometres from the Blue Lagoon.</p>
+      <span class="br-door__go">See the rooms</span>
+    </div>
+  </a>
+</section>
 
-  <!-- the crossing: the letters fill with their own cladding profile -->
-  <div class="br-hero__glyph" id="heroGlyph" aria-hidden="true">
-    <div class="br-hero__glyph-in"></div>
-  </div>
-  <svg class="br-hero__defs" aria-hidden="true" focusable="false" width="0" height="0">
-    <defs><clipPath id="wmGlyphs" clipPathUnits="userSpaceOnUse">
-      <!-- the strike is offset on the CLIP, never by moving the layer. Translating
-           the element would drag its crop clip along with it, so the boundary
-           between "on the picture" and "off it" would slide off the picture's
-           own edge by the same few pixels and read as a registration fault. -->
-      <use href="#wmGlyphText" id="wmGlyphUse" x="0" y="0"></use>
-    </clipPath></defs>
-  </svg>
-
-  <!-- three rows. The eyebrow sits ABOVE the panel and the copy BELOW it, both
-       on the dark ground where paper ink reads ~14:1. The middle row is left
-       empty: it is the crossing, and nothing else should sit on the picture. -->
-  <div class="br-hero__copy">
-    <div class="br-hero__top">
-      <p class="br-hero__eyebrow" id="wmTop">Restaurant by the harbour</p>
+<!-- ── 2. who we are ─────────────────────────────────────────────────────── -->
+<section class="br-intro" id="intro">
+  <div class="br-wrap br-intro__grid">
+    <div class="br-intro__top">
+      <p class="br-hero__eyebrow" id="wmTop">Hafnargata 26, Grindavík</p>
       <span class="br-hero__seam" id="wmSeam" aria-hidden="true"></span>
     </div>
+    <h2 class="br-intro__h" data-headline>One family, two houses</h2>
+    <p class="br-intro__lede">A restaurant and rooms at the front of the harbour, run by the same family in the same house.</p>
+  </div>
+  <div class="br-intro__media">
+    <div class="br-frame"><img class="br-frame-in" data-drift="16"
+      src="assets/img/husid-full.webp" width="4096" height="3072"
+      alt="Brúin, a low red-clad house by the harbour in Grindavík"
+      fetchpriority="high" decoding="async"></div>
+  </div>
+</section>
 
-    <h1 class="br-sr">Brúin, seafood restaurant by the harbour in Grindavík</h1>
+<!-- ── 2. sagan ───────────────────────────────────────────────────────────
+     Every date sourced; see _internal/NOTES.md. The evacuation is stated
+     plainly and without eruption imagery, and it remains the OWNERS' call
+     whether it appears publicly at all. -->
+<section class="br-story" id="our-story">
+  <div class="br-wrap br-story__grid">
+    <div class="br-story__intro">
+      <p class="br-eyebrow br-rv">Our story</p>
+      <h2 class="br-h2" data-headline>Since 2013, with one interruption</h2>
+    </div>
+    <ol class="br-time br-rv">
+      <li>
+        <span class="br-time__y">2013</span>
+        <div><h3>Brúin opens</h3>
+          <p>The restaurant opens on Hafnargata in June, a stone's throw from the pier. Fish off the boats in the harbour from the first day.</p></div>
+      </li>
+      <li>
+        <span class="br-time__y">2022</span>
+        <div><h3>The hotel is added</h3>
+          <p>Rooms open in February: double rooms and family rooms with a sleeping loft, with self check-in.</p></div>
+      </li>
+      <li>
+        <span class="br-time__y">2023</span>
+        <div><h3>The town is evacuated</h3>
+          <p>Grindavík is evacuated in November and the house stands empty. Opening again was never a given.</p></div>
+      </li>
+      <li>
+        <span class="br-time__y">2025</span>
+        <div><h3>The lights go back on</h3>
+          <p>The house opens again in June. Coffee on the pot, soup on the menu, and a table by the window facing the harbour.</p></div>
+      </li>
+    </ol>
+  </div>
+</section>
 
-    <div class="br-hero__foot">
-      <p class="br-hero__sub">Fish off the boats in the harbour, seating for 135 and a view over the ocean.</p>
-      <a class="br-btn br-btn--ghost br-btn--onDark" href="#book">Book a table</a>
+<!-- ── 3. húsin: the two properties, both routes reachable ──────────────── -->
+<section class="br-houses" id="two-houses">
+  <div class="br-wrap">
+    <h2 class="br-h2" data-headline>The two houses</h2>
+    <div class="br-houses__grid">
+      <article class="br-houses__card br-rv">
+        <div class="br-frame"><img class="br-frame-in" data-drift="10"
+          src="assets/img/supa.webp" width="960" height="960"
+          alt="The Captain's fish soup with rye bread" loading="lazy" decoding="async"></div>
+        <h3 class="br-room__h">Restaurant Brúin</h3>
+        <p>The room seats 135. Fish dishes and the Captain's fish soup, meat dishes and burgers, a children's menu and a play corner. A coffeehouse with home baking, and the bar is always open.</p>
+        <a class="br-btn br-btn--line" href="restaurant.html">Menu and tables</a>
+      </article>
+      <article class="br-houses__card br-rv">
+        <div class="br-frame"><img class="br-frame-in" data-drift="10"
+          src="assets/img/herbergi.webp" width="2000" height="1333"
+          alt="A family room at Hótel Grindavík with a sleeping loft" loading="lazy" decoding="async"></div>
+        <h3 class="br-room__h">Hótel Grindavík</h3>
+        <p>Double rooms and family rooms with a sleeping loft, all with a private bathroom, fridge and free wifi. Self check-in and free parking at the house.</p>
+        <a class="br-btn br-btn--line" href="hotel.html">Rooms and prices</a>
+      </article>
     </div>
   </div>
 </section>
 
-<!-- ── 2. opið aftur ───────────────────────────────────────────────────── -->
-<!-- OWNER DECISION: whether the reopening is public is theirs. Every date sourced. -->
-<section class="br-open" id="open-again">
-  <div class="br-wrap br-open__grid">
-    <h2 class="br-h2" data-headline>The lights are on</h2>
-    <div class="br-open__body br-rv">
-      <p class="br-lede">Brúin opened on Hafnargata in June 2013. In November 2023 Grindavík was evacuated. In June 2025 the house opened again.</p>
-      <p>It is open. Coffee on the pot, and a table by the window that faces the harbour.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ── 3. THE FILM: pinned, scrubbed frame sequence ─────────────────────
-     Their own building, approached over the length of the pin. A canvas
-     sequence, never a <video> driven by currentTime: every currentTime
-     assignment is a decoder seek and the film would step instead of track. -->
-<section class="br-film" id="film">
-  <div class="br-film__inner">
-    <div class="br-film__still"><img src="assets/img/poster.jpg" width="1600" height="1196"
-      alt="Brúin by the harbour" loading="lazy" decoding="async"></div>
-    <canvas class="br-film__canvas" aria-hidden="true"></canvas>
-    <div class="br-film__scrim" aria-hidden="true"></div>
-    <div class="br-film__caps">
-      <p class="br-film__cap is-on" data-cap="day">Beneath the house there is a hill</p>
-      <p class="br-film__cap" data-cap="eve">They own a boat and fish from the same harbour</p>
-    </div>
-  </div>
-</section>
-
-<!-- ── 3b. Miðaftanhóll: the house's own legend, in the house's own words ──
-     Taken from the card that hangs in the restaurant. It is the one thing on
-     this site no competitor can copy, and the boat line ties the folklore to
-     the actual kitchen, so it earns its place rather than decorating one. -->
+<!-- ── 4. Miðaftanhóll: pointed at, not repeated ────────────────────────── -->
 <section class="br-holl" id="the-hill">
   <div class="br-wrap br-holl__grid">
     <p class="br-eyebrow br-rv">Miðaftanhóll</p>
-    <h2 class="br-h2" data-headline>They fish from the same harbour we do</h2>
+    <h2 class="br-h2" data-headline>The house stands on a hill</h2>
     <div class="br-holl__body br-rv">
-      <p class="br-lede">Beneath the restaurant is a hill named Miðaftanhóll, the Hill of Midevening. It is the home of a hidden couple and some other elves. The couple look after the area around the hill and assist other creatures when needed.</p>
+      <p class="br-lede">Beneath the restaurant is a hill named Miðaftanhóll, the Hill of Midevening. A hidden couple live in it and look after the area around the hill.</p>
       <p class="br-holl__line"><b>They own a boat and fish from the harbour.</b></p>
-      <p>To see the elves you need only three things: a bit of joy in your heart, permission from the adult in you to let the child in you go out and play, and an elf who wants to be seen.</p>
-      <p class="br-holl__src">From the card that hangs in the dining room.</p>
+      <a class="br-btn br-btn--line" href="restaurant.html#the-hill">The whole story</a>
     </div>
   </div>
 </section>
 
-<!-- ── 4. matseðill ────────────────────────────────────────────────────── -->
-<!-- Dishes and prices are THEIR OWN, lifted from their live menu page. Their
-     current site prints these numbers with a EUR sign because the Wix currency
-     was never set, so a visitor reads the lobster as 8.300 euros. Here they are
-     krónur, which is what they are. -->
-<section class="br-menu-sec" id="menu">
-  <div class="br-wrap">
-    <h2 class="br-h2" data-headline>Menu</h2>
-    <p class="br-menu-sec__note br-rv">Prices in krónur. Children's menu at 1.050, and a play corner inside the room.</p>
-
-    <!-- their own dishes, their own photographs. The page had four copies of
-         the same exterior and none of the food the kitchen is known for. -->
-    <div class="br-rail br-rv">
-      <figure><div class="br-frame"><img class="br-frame-in" data-drift="7"
-        src="assets/img/pizza.webp" width="640" height="480"
-        alt="A slice of pizza lifted from the dish, the cheese stretching" loading="lazy" decoding="async"></div>
-        <figcaption>Pizza, and a buffet for groups</figcaption></figure>
-      <figure><div class="br-frame"><img class="br-frame-in" data-drift="7"
-        src="assets/img/silungur.webp" width="960" height="720"
-        alt="Oven-baked trout with sweet potato mash and salad" loading="lazy" decoding="async"></div>
-        <figcaption>Oven-baked trout</figcaption></figure>
-      <figure><div class="br-frame"><img class="br-frame-in" data-drift="7"
-        src="assets/img/borgari.webp" width="960" height="960"
-        alt="A hamburger with french fries" loading="lazy" decoding="async"></div>
-        <figcaption>Burgers every day</figcaption></figure>
-    </div>
-    <div class="br-menu-grid">
-      <div class="br-menu-col br-rv">
-        <h3 class="br-menu-col__h">From the sea</h3>
-        <ul class="br-dish">
-          <li><b>The Captain's fish soup</b><span>What the house is best known for.</span><i>2.900</i></li>
-          <li><b>Oven-baked salmon</b><span>Sweet potato mash and mixed vegetables.</span><i>4.400</i></li>
-          <li><b>Oven-baked trout</b><span>Sweet potato mash and fresh salad.</span><i>3.900</i></li>
-          <li><b>Garlic roasted lobster</b><span>Potato wedges, salad and garlic bread.</span><i>8.300</i></li>
-          <li><b>Deep-fried fish</b><span>French fries and salad.</span><i>3.100</i></li>
-          <li><b>Fish burger</b><span>Chilli mayo, lettuce, red onion and tomato.</span><i>2.700</i></li>
-          <li><b>Fish balls</b><span>Rice, chilli sauce and salad.</span><i>2.700</i></li>
-        </ul>
-      </div>
-      <div class="br-menu-col br-rv">
-        <h3 class="br-menu-col__h">From the land</h3>
-        <ul class="br-dish">
-          <li><b>Pan-fried lamb chops</b><span>Potato wedges and béarnaise.</span><i>4.100</i></li>
-          <li><b>Pork schnitzel</b><span>Potato wedges and béarnaise.</span><i>3.400</i></li>
-          <li><b>Steak sandwich</b><span>French fries and béarnaise.</span><i>3.100</i></li>
-          <li><b>Cheeseburger</b><span>Lettuce, cucumber, red onion and french fries.</span><i>2.700</i></li>
-          <li><b>Chicken burger</b><span>Chilli mayo, tomato and french fries.</span><i>2.700</i></li>
-        </ul>
-        <h3 class="br-menu-col__h br-menu-col__h--2">For groups</h3>
-        <ul class="br-dish">
-          <li><b>Pizza buffet</b><span>From 15 people. Vegan, vegetarian and gluten free available. Pizza, soda, water and coffee included.</span><i>By headcount</i></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── 5. fiskisúpan: their own photograph of their own signature dish ──── -->
-<section class="br-soup" id="fish-soup">
-  <div class="br-soup__media">
-    <div class="br-frame"><img class="br-frame-in" data-drift="12"
-      src="assets/img/supa.webp" width="960" height="960"
-      alt="The Captain's fish soup in a deep bowl with dark rye bread beside it"
-      loading="lazy" decoding="async"></div>
-  </div>
-  <div class="br-wrap br-soup__grid">
-    <p class="br-eyebrow br-rv">The Captain's fish soup</p>
-    <h2 class="br-h2" data-headline>The soup people come back for</h2>
-    <div class="br-rv">
-      <p>The chef makes it himself and it is on the menu every day we are open. Rye bread with it.</p>
-      <p class="br-soup__price">2.900 kr.</p>
-      <a class="br-btn br-btn--line" href="#book">Book a table</a>
-    </div>
-  </div>
-</section>
-
-<!-- ── 6. húsið ────────────────────────────────────────────────────────── -->
-<section class="br-house" id="the-house">
-  <div class="br-house__media">
-    <div class="br-frame"><img class="br-frame-in" data-drift="14"
-      src="assets/img/barinn.webp" width="801" height="716"
-      alt="The dark wooden bar with a cabinet of home baking" loading="lazy" decoding="async"></div>
-  </div>
-  <div class="br-wrap br-house__copy">
-    <h2 class="br-h2" data-headline>The house</h2>
-    <div class="br-rv">
-      <p class="br-lede">A low red-clad house at the front of the harbour, with a terrace and a glass corner facing the sea. The room seats 135, there is a play corner inside and a groups menu for larger parties.</p>
-      <p>The house opened in 2013 and stands on Hafnargata, a stone's throw from the pier.</p>
-    </div>
-  </div>
-
-  <!-- inside: the bar and the wheel. Both are their own photographs, and the
-       wheel is only 256px wide at source, so it is framed small on purpose
-       rather than blown up into mush. -->
-  <div class="br-wrap br-house__pair">
-    <figure class="br-house__fig br-rv">
-      <div class="br-frame"><img class="br-frame-in" data-drift="9"
-        src="assets/img/kaka.webp" width="1300" height="975"
-        alt="Chocolate cake with a strawberry on a plate" loading="lazy" decoding="async"></div>
-      <figcaption>Coffee and home baking all day, and the bar is always open.</figcaption>
-    </figure>
-    <figure class="br-house__fig br-house__fig--small br-rv">
-      <div class="br-frame"><img class="br-frame-in" data-drift="6"
-        src="assets/img/styri.webp" width="256" height="320"
-        alt="A ship's wheel on the wall inside the room" loading="lazy" decoding="async"></div>
-      <figcaption>The room is furnished out of the harbour itself.</figcaption>
-    </figure>
-  </div>
-</section>
-
-<!-- ── 7. hvar ─────────────────────────────────────────────────────────── -->
+<!-- ── 5. hvar ────────────────────────────────────────────────────────── -->
 <section class="br-where" id="find-us">
   <div class="br-wrap br-where__grid">
     <div>
       <h2 class="br-h2" data-headline>Find us</h2>
       <div class="br-rv">
-        <p class="br-lede">Hafnargata 26, 240 Grindavík. At the front of the harbour, minutes from the Blue Lagoon.</p>
-        <!-- HOURS UNCONFIRMED: sources conflict. A phone number beats a fabricated timetable. -->
-        <p class="br-where__hours">Opening hours can change. Call <a href="tel:+3544267080">426 7080</a> to be sure.</p>
+        <p class="br-lede">Hafnargata 26, 240 Grindavík. At the front of the harbour, eight kilometres from the Blue Lagoon and 27 km from Keflavík airport.</p>
+        <p class="br-where__hours">Call <a href="tel:+3544267080">426 7080</a> or email <a href="mailto:bruin@simnet.is">bruin@simnet.is</a>.</p>
       </div>
     </div>
-    <!-- NOT loading="lazy": a lazy iframe this deep in a scroll-heavy page has
-         measured 6-10s of blank box, because the native lazy scheduler gets
-         starved by the ticker and the scrubbed triggers. Eager-load it. -->
+    <!-- NOT loading="lazy": see the note on the Brúin page. -->
     <div class="br-map br-rv">
       <iframe
         src="https://www.google.com/maps?q=Hafnargata+26,+240+Grindav%C3%ADk,+Iceland&z=15&output=embed"
@@ -297,49 +214,6 @@
   </div>
 </section>
 
-<!-- ── 9. bókun: arrives with the lights on ────────────────────────────── -->
-<section class="br-book" id="book">
-  <div class="br-wrap br-book__grid">
-    <div class="br-book__intro">
-      <h2 class="br-h2" data-headline>Book a table</h2>
-      <p class="br-lede br-rv">Send us an enquiry and we confirm by phone or email. No payment is taken here.</p>
-    </div>
-    <form class="br-form br-rv" id="form" novalidate>
-      <div class="br-field"><label for="f-nafn">Name</label><input id="f-nafn" name="nafn" type="text" autocomplete="name" required></div>
-      <div class="br-field"><label for="f-sim">Phone</label><input id="f-sim" name="sim" type="tel" autocomplete="tel" required></div>
-      <div class="br-field"><label for="f-dags">Date</label><input id="f-dags" name="dags" type="date" required></div>
-      <div class="br-field"><label for="f-fjoldi">Guests</label><input id="f-fjoldi" name="fjoldi" type="number" min="1" max="135" value="2" required></div>
-      <div class="br-field br-field--wide"><label for="f-ath">Notes</label>
-        <textarea id="f-ath" name="ath" rows="3" placeholder="High chair, wheelchair access, allergies"></textarea></div>
-      <button class="br-btn br-btn--solid" type="submit">Send enquiry</button>
-      <p class="br-form__msg" id="formMsg" role="status" aria-live="polite"></p>
-    </form>
-  </div>
-</section>
-
-<!-- ── 9. the other house ──────────────────────────────────────────────────
-     The cross-sell that pays for itself: the same family runs the hotel a
-     minute's walk away, and the diner reading this at eight in the evening is
-     the same person who needs a bed. Today nothing on the web connects the
-     two, because the restaurant and the hotel sit on one Wix page each. -->
-<section class="br-cross" id="the-hotel">
-  <div class="br-cross__media">
-    <div class="br-frame"><img class="br-frame-in" data-drift="14"
-      src="assets/img/herbergi.webp" width="2000" height="1333"
-      alt="A family room at Hótel Grindavík with a sleeping loft and stair"
-      loading="lazy" decoding="async"></div>
-  </div>
-  <div class="br-wrap br-cross__grid">
-    <p class="br-eyebrow br-rv">Same family</p>
-    <h2 class="br-h2" data-headline>Hótel Grindavík</h2>
-    <div class="br-rv">
-      <p class="br-lede">A place to stay within walking distance, eight kilometres from the Blue Lagoon. Double rooms and family rooms with a sleeping loft.</p>
-      <p>Book direct with us.</p>
-      <a class="br-btn br-btn--line" href="hotel.html">See the hotel</a>
-    </div>
-  </div>
-</section>
-
 </main>
 
 <footer class="br-foot">
@@ -351,13 +225,9 @@
     </div>
     <div class="br-foot__col"><p>Hafnargata 26<br>240 Grindavík</p></div>
     <div class="br-foot__col">
-      <a href="index.html">Restaurant Brúin</a>
+      <a href="restaurant.html">Restaurant Brúin</a>
       <a href="hotel.html">Hótel Grindavík</a>
-      <a href="about.html">About us</a>
-    </div>
-    <div class="br-foot__col">
-      <a href="https://www.facebook.com/veitingahusidbruin" target="_blank" rel="noopener">Facebook</a>
-      <a href="https://www.instagram.com/bruinrestaurant" target="_blank" rel="noopener">Instagram</a>
+      <a href="index.html">About us</a>
     </div>
   </div>
 </footer>
