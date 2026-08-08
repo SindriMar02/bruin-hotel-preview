@@ -1,0 +1,701 @@
+/* ════════════════════════════════════════════════════════════════════════
+   Brúin — Grindavík
+   The page has NO fixed ground. One master scroll writes --br-c / --br-ink /
+   --br-soft on the root and every section inherits, so the whole document is
+   one continuous harbour day that ends with the windows lit.
+   Fixed tokens below are sampled from the client's own building photograph
+   (8.687 cladding pixels). Keyframes are br- prefixed: a shared @keyframes
+   name can be silently redefined by another page's block and freeze this one.
+   ════════════════════════════════════════════════════════════════════════ */
+
+@font-face{font-family:'Clash';src:url('assets/fonts/ClashDisplay-Bold.woff2') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'Clash';src:url('assets/fonts/ClashDisplay-Semibold.woff2') format('woff2');font-weight:600;font-display:swap}
+@font-face{font-family:'Clash';src:url('assets/fonts/ClashDisplay-Medium.woff2') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Switzer';src:url('assets/fonts/Switzer-Regular.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Switzer';src:url('assets/fonts/Switzer-Medium.woff2') format('woff2');font-weight:500;font-display:swap}
+
+:root{
+  /* scrubbed by the engine; these are only the pre-JS resting values */
+  --br-c:#C3D2DD;
+  --br-ink:#2F2B22;
+  --br-soft:#B4C6D3;
+
+  /* sampled from the building, constant */
+  --iron:#73433A;
+  --iron-deep:#462828;
+  --iron-lift:#8C4B3C;
+  --iron-over:#C25A38;   /* lifted, saturated: the muted cladding red read as mud at size */
+  /* the ink of the offset strike inside the wordmark's crossing */
+  --paper:#E4E0D1;
+  --ground:#2F2B22;
+
+  --u:clamp(.62px,.093vw,1.05px);
+  --pad:clamp(20px,5vw,72px);
+  --maxw:1320px;
+  --nav-h:clamp(58px,7vh,72px);
+  --r:0;
+  --e:cubic-bezier(.16,1,.3,1);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--br-c);color:var(--br-ink);
+  font-family:'Switzer',system-ui,sans-serif;
+  font-size:clamp(15px,1.02vw,17.5px);line-height:1.62;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  transition:background-color .12s linear;
+}
+body.is-loading{overflow:hidden}
+img,video,canvas{max-width:100%;display:block}
+a{color:inherit}
+section[id],main>section{scroll-margin-top:clamp(88px,calc(var(--u) * 116),136px)}
+.br-wrap{width:100%;max-width:var(--maxw);margin-inline:auto;padding-inline:var(--pad)}
+
+/* ── type ─────────────────────────────────────────────────────────────── */
+.br-h2{
+  font-family:'Clash',sans-serif;font-weight:700;
+  font-size:clamp(32px,5vw,74px);
+  line-height:1.16;                 /* Icelandic Á/Í acutes need the headroom */
+  letter-spacing:-.02em;margin:0 0 .46em;
+}
+.br-lede{font-size:clamp(17px,1.55vw,23px);line-height:1.48;color:var(--br-ink);margin:0 0 1em}
+.br-eyebrow{
+  font-family:'Switzer',sans-serif;font-weight:500;font-size:12px;
+  letter-spacing:.17em;text-transform:uppercase;color:var(--iron);margin:0 0 1.1em;
+}
+body.is-night .br-eyebrow{color:var(--iron-lift)}
+p{margin:0 0 1em;max-width:62ch;color:var(--br-ink);opacity:.82}
+.br-lede{opacity:1}
+
+/* word masks: the overflow clip lives on the LINE, the word travels */
+.br-line{display:inline-block;overflow:hidden;padding-bottom:.14em;margin-bottom:-.14em;vertical-align:bottom}
+.br-word{display:inline-block;will-change:transform}
+
+/* ── buttons ──────────────────────────────────────────────────────────── */
+.br-btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-height:48px;padding:0 26px;border-radius:var(--r);
+  font-family:'Switzer',sans-serif;font-weight:500;font-size:15px;
+  text-decoration:none;cursor:pointer;border:1px solid transparent;
+  transition:background .25s var(--e),color .25s var(--e),transform .18s var(--e),border-color .25s var(--e);
+}
+.br-btn--solid,.br-btn--line,.br-btn--ghost{
+  background:transparent;color:var(--br-ink);
+  border-color:color-mix(in srgb, currentColor 42%, transparent);
+}
+.br-btn--solid:hover,.br-btn--line:hover,.br-btn--ghost:hover{
+  background:var(--br-ink);color:var(--br-c);border-color:var(--br-ink);
+}
+.br-btn--onDark{color:var(--paper);border-color:rgba(228,224,209,.45)}
+.br-btn--onDark:hover{background:var(--paper);color:var(--ground);border-color:var(--paper)}
+.br-btn:active{transform:translateY(1px)}
+.br-btn:focus-visible,a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
+  outline:2px solid var(--iron-lift);outline-offset:3px
+}
+
+/* ── preloader ────────────────────────────────────────────────────────── */
+.br-loader{
+  position:fixed;inset:0;z-index:200;background:var(--ground);
+  display:grid;place-content:center;gap:18px;justify-items:center;
+  transition:opacity .85s var(--e),visibility .85s var(--e);
+}
+.br-loader.is-leaving{opacity:0;visibility:hidden}
+.br-loader__mark{
+  margin:0;font-family:'Clash',sans-serif;font-weight:700;
+  font-size:clamp(40px,9vw,104px);letter-spacing:-.03em;line-height:1;
+  /* hard two-stop gradient at 200%: position driven by (100 - pct), so it is
+     exactly solid at 100 */
+  background-image:linear-gradient(90deg,var(--paper) 0 50%,rgba(228,224,209,.16) 50% 100%);
+  background-size:200% 100%;
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.br-loader__pct{
+  margin:0;font-size:12px;letter-spacing:.2em;color:rgba(228,224,209,.55);
+  font-variant-numeric:tabular-nums;
+}
+
+/* ── nav ──────────────────────────────────────────────────────────────── */
+.br-nav{
+  position:fixed;z-index:80;height:var(--nav-h);
+  top:0;left:0;right:0;
+  display:flex;align-items:center;gap:clamp(10px,2vw,30px);
+  padding-inline:var(--pad);
+  color:var(--paper);background:transparent;
+  transition:color .3s var(--e),background .3s var(--e);
+}
+/* the hero ground is dark now, so the bar needs no fill to stay legible.
+   Past the hero it simply adopts the page's own scrubbed palette. */
+.br-nav::before{
+  content:'';position:absolute;inset:0 0 auto 0;height:calc(var(--nav-h) + 40px);
+  background:linear-gradient(to bottom, rgba(26,22,17,.72), rgba(26,22,17,0));
+  pointer-events:none;z-index:-1;transition:opacity .3s var(--e);
+}
+.br-nav.is-solid::before{opacity:0}
+.br-nav.is-solid{background:var(--br-c);color:var(--br-ink)}
+/* both houses in the nav, the current one lit. The pair IS the cross-sell:
+   a guest who never learns the hotel exists cannot book it. */
+.br-nav__brands{display:flex;align-items:center;gap:clamp(6px,.7vw,10px);margin-right:auto}
+.br-nav__mark{
+  font-family:'Clash',sans-serif;font-weight:700;font-size:clamp(17px,1.5vw,20px);
+  letter-spacing:.02em;text-transform:uppercase;text-decoration:none;
+  min-height:44px;display:inline-flex;align-items:center;
+  opacity:.42;transition:opacity .3s var(--e);
+}
+.br-nav__mark:hover,.br-nav__mark:focus-visible{opacity:.78}
+.br-nav__mark.is-here{opacity:1}
+.br-nav__amp{
+  font-family:'Clash',sans-serif;font-weight:500;opacity:.32;
+  font-size:clamp(15px,1.3vw,18px);
+}
+.br-nav__links{display:none;gap:clamp(8px,1.4vw,22px);align-items:center}
+.br-nav__links a{
+  text-decoration:none;font-size:14px;font-weight:500;letter-spacing:.02em;
+  min-height:44px;min-width:44px;padding:0 8px;
+  display:inline-flex;align-items:center;justify-content:center;opacity:.86;
+  transition:opacity .22s var(--e);
+}
+.br-nav__links a:hover{opacity:1}
+/* the CTA is a hairline, not a pill. Explicit class: a `.br-nav a{color:inherit}`
+   catch-all out-specifies a bare element rule and renders the label invisible. */
+.br-nav a.br-nav__cta{
+  border-bottom:1px solid currentColor;padding:0 2px;margin-left:6px;
+  min-width:0;opacity:1;
+}
+.br-nav__tel{display:none;font-size:14px;font-weight:500;text-decoration:none;min-height:44px;align-items:center;opacity:.86}
+.br-burger{width:48px;height:48px;margin-right:-10px;background:none;border:0;cursor:pointer;display:grid;place-content:center;gap:6px;color:inherit}
+.br-burger span{display:block;width:22px;height:1.5px;background:currentColor;transition:transform .32s var(--e)}
+.br-burger[aria-expanded="true"] span:first-child{transform:translateY(3.75px) rotate(45deg)}
+.br-burger[aria-expanded="true"] span:last-child{transform:translateY(-3.75px) rotate(-45deg)}
+@media (min-width:900px){
+  .br-nav__links{display:flex}
+  .br-nav__tel{display:inline-flex}
+  .br-burger{display:none}
+}
+
+/* ── menu (sibling of header: backdrop-filter on the header would make it the
+      containing block for fixed descendants) ──────────────────────────── */
+.br-menu{
+  position:fixed;inset:0;z-index:70;background:var(--br-c);color:var(--br-ink);
+  display:flex;flex-direction:column;justify-content:center;
+  padding:calc(var(--nav-h) + 30px) var(--pad) var(--pad);
+  opacity:0;pointer-events:none;transition:opacity .34s var(--e);
+}
+.br-menu[hidden]{display:none}   /* pair the attribute with any display rule */
+.br-menu.is-open{opacity:1;pointer-events:auto}
+.br-menu nav{display:flex;flex-direction:column;gap:2px}
+.br-menu nav a{
+  font-family:'Clash',sans-serif;font-weight:700;
+  font-size:clamp(30px,8vw,54px);line-height:1.2;text-decoration:none;
+  overflow:hidden;display:block;padding:4px 0;
+}
+.br-menu nav a span{display:block;transform:translateY(105%);transition:transform .5s var(--e)}
+.br-menu.is-open nav a span{transform:none}
+.br-menu nav a:nth-child(1) span{transition-delay:.06s}
+.br-menu nav a:nth-child(2) span{transition-delay:.11s}
+.br-menu nav a:nth-child(3) span{transition-delay:.16s}
+.br-menu nav a:nth-child(4) span{transition-delay:.21s}
+.br-menu nav a:nth-child(5) span{transition-delay:.26s}
+.br-menu__foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:16px;border-top:1px solid currentColor;padding-top:20px;opacity:.9}
+.br-menu__foot a{text-decoration:none;font-weight:500;min-height:44px;display:inline-flex;align-items:center}
+.br-menu__cta{background:var(--iron-lift);color:var(--paper);padding:0 22px}
+
+/* ── the drift frame (Heklusýn spec) ──────────────────────────────────── */
+.br-frame{position:relative;overflow:hidden;width:100%;height:100%}
+.br-frame-in{
+  position:absolute;left:0;top:-19%;width:100%;height:138%;
+  object-fit:cover;object-position:center 42%;
+  will-change:transform;
+}
+
+/* ── 1. hero ──────────────────────────────────────────────────────────────
+   The photograph fills the viewport but is CLIPPED to a centred crop; the clip
+   opens to full bleed as you scroll. The wordmark sits above it in
+   mix-blend-mode: difference, so it inverts whatever passes beneath, pixel by
+   pixel, instead of switching to a flat second colour.
+   HARD CONSTRAINT: transform, opacity or clip-path on the wordmark or ANY
+   ancestor inside the hero creates a stacking context and the blend stops
+   seeing the panel. Nothing above it may be animated at rest.
+   ──────────────────────────────────────────────────────────────────────── */
+.br-hero{
+  --panel-w:min(42vw,520px);
+  --panel-h:min(62svh,620px);
+  position:relative;min-height:100svh;overflow:hidden;
+  background:var(--ground);
+  isolation:isolate;            /* confine the blend to the hero */
+}
+.br-hero__panel{
+  position:absolute;inset:0;
+  clip-path:inset(var(--clip-y,22%) var(--clip-x,33%));
+}
+.br-hero__panel .br-frame,.br-hero__panel .br-frame-in,.br-hero__panel video{
+  width:100%;height:100%;object-fit:cover;
+}
+
+/* THE WORDMARK, in three layers.
+   1. the plain photograph, clipped to the crop that opens on scroll
+   2. the paper letters, as SVG text
+   3. the SAME photograph again, poured into those same letterforms and graded
+      down, so that where a letter crosses the picture the letter IS the
+      picture. The crop and the letters open together, so the word fills with
+      photograph as the picture arrives instead of just changing colour. */
+.br-hero__wmsvg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.br-hero__wmtext{fill:var(--paper)}
+.br-hero__glyph{
+  position:absolute;inset:0;
+  clip-path:url(#wmGlyphs);
+  /* the letters are backed with the cladding's own deep red. A photograph
+     poured straight in matches the luminance of the photograph AROUND it
+     wherever the picture is dark, and the word vanishes into its own
+     background; the backing holds a constant ink under the texture. */
+}
+/* the ink lives on the inner layer, because that is the one carrying the crop.
+   On the outer layer it would paint every letter at once, including the ones
+   standing on bare ground outside the picture. */
+.br-hero__glyph-in{
+  position:absolute;inset:0;
+  clip-path:inset(var(--clip-y,22%) var(--clip-x,33%));
+  background:var(--iron-over);
+}
+/* no url() clip support (or no JS): the paper wordmark alone still reads */
+.no-glyphclip .br-hero__glyph{display:none}
+
+.br-hero__copy{
+  position:relative;width:100%;height:100svh;
+  padding:calc(var(--nav-h) + 14px) var(--pad) clamp(26px,5vh,54px);
+  text-align:center;color:var(--paper);
+  display:grid;grid-template-rows:auto 1fr auto;justify-items:center;align-items:center;
+}
+.br-hero__top,.br-hero__foot{position:relative;z-index:3;display:grid;justify-items:center}
+/* explicit rows: the only in-flow children are these two, and the wordmark's
+   row must stay empty between them */
+.br-hero__top{grid-row:1}
+.br-hero__foot{grid-row:3;align-content:end;gap:4px}
+.br-hero__eyebrow{
+  font-family:'Switzer',sans-serif;font-weight:500;font-size:12px;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--paper);
+  margin:0 0 16px;opacity:.9;
+}
+.br-hero__seam{
+  display:block;height:1px;width:min(420px,58vw);
+  background:var(--paper);transform-origin:center;opacity:.7;
+}
+
+.br-hero__sub{
+  color:var(--paper);opacity:.92;font-size:clamp(15px,1.2vw,18px);
+  max-width:32ch;margin:0 0 1.6em;
+}
+/* the room is a landscape photograph and the portrait slice cropped the loft
+   stair out of it. Wider crop, same crossing — the panel only has to stay
+   narrower than the wordmark, not narrow in absolute terms. */
+.br-hero--wide{--panel-w:min(56vw,760px);--panel-h:min(54svh,520px)}
+@media (max-width:760px){
+  .br-hero{--panel-w:min(44vw,200px);--panel-h:min(46svh,380px)}
+  .br-hero--wide{--panel-w:min(58vw,226px);--panel-h:min(30svh,230px)}
+}
+
+/* ── 2. opið aftur ────────────────────────────────────────────────────── */
+.br-open{padding:clamp(72px,13vh,150px) 0}
+.br-open__grid{display:grid;gap:clamp(18px,3vw,54px);grid-template-columns:1fr}
+@media (min-width:860px){.br-open__grid{grid-template-columns:1fr 1.05fr;align-items:start}}
+
+/* ── 3. THE FILM ──────────────────────────────────────────────────────── */
+.br-film{position:relative;height:100svh;overflow:hidden;background:var(--ground)}
+.br-film__inner{position:absolute;inset:0}
+.br-film__still,.br-film__still img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.br-film__canvas{position:absolute;inset:0;width:100%;height:100%}
+.br-film__scrim{
+  position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(to top, rgba(30,26,20,.66) 0%, rgba(30,26,20,0) 42%);
+}
+.br-film__caps{
+  position:absolute;left:0;right:0;bottom:clamp(34px,7vh,74px);
+  display:grid;padding-inline:var(--pad);
+}
+.br-film__cap{
+  grid-area:1/1;margin:0;max-width:none;
+  font-family:'Clash',sans-serif;font-weight:700;
+  font-size:clamp(24px,4.2vw,58px);line-height:1.14;letter-spacing:-.02em;
+  color:var(--paper);opacity:0;transition:opacity .32s var(--e);
+}
+.br-film__cap.is-on{opacity:1}
+
+/* ── 4. matseðill ─────────────────────────────────────────────────────────
+   A hairline under every row is the laziest possible list. One rule per GROUP,
+   large names with air, descriptions demoted. */
+.br-menu-sec{padding:clamp(72px,13vh,150px) 0}
+.br-menu-grid{
+  display:grid;gap:clamp(40px,6vw,110px);grid-template-columns:1fr;
+  max-width:1040px;margin-inline:auto;
+}
+@media (min-width:820px){.br-menu-grid{grid-template-columns:1fr 1fr}}
+.br-menu-col__h{
+  font-family:'Switzer',sans-serif;font-weight:500;font-size:11px;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--iron);
+  margin:0 0 1.6em;padding-bottom:1em;
+  border-bottom:1px solid color-mix(in srgb, var(--br-ink) 22%, transparent);
+}
+body.is-night .br-menu-col__h{color:var(--iron-lift)}
+.br-menu-col__h--2{margin-top:3.4em}
+.br-dish{list-style:none;padding:0;margin:0}
+.br-dish li{padding:0 0 clamp(20px,2.6vh,32px)}
+.br-dish li:last-child{padding-bottom:0}
+.br-dish b{
+  display:block;font-family:'Clash',sans-serif;font-weight:500;
+  font-size:clamp(21px,2.1vw,30px);line-height:1.2;letter-spacing:-.012em;
+  color:var(--br-ink);
+}
+.br-dish span{
+  display:block;font-size:14.5px;line-height:1.5;color:var(--br-ink);
+  opacity:.6;margin-top:6px;max-width:34ch;
+}
+
+/* ── 5. fiskisúpan ────────────────────────────────────────────────────── */
+.br-soup{padding:clamp(64px,12vh,140px) 0}
+.br-soup__grid{display:grid;place-items:center;text-align:center}
+.br-soup .br-h2{max-width:15ch;margin-inline:auto}
+.br-soup p{margin-inline:auto}
+.br-soup .br-btn{margin-top:.7em}
+
+/* ── 6. húsið ─────────────────────────────────────────────────────────── */
+.br-house{padding:0 0 clamp(64px,11vh,130px)}
+.br-house__media{position:relative;height:clamp(320px,66vh,680px)}
+.br-house__copy{padding-top:clamp(36px,5.6vh,68px)}
+
+/* ── 7. borðið ────────────────────────────────────────────────────────── */
+.br-table{padding:clamp(64px,11vh,130px) 0}
+.br-table__note{margin-bottom:clamp(22px,3.2vh,38px)}
+.br-switch{
+  position:relative;display:inline-flex;flex-wrap:wrap;
+  border:1px solid color-mix(in srgb, var(--br-ink) 26%, transparent);
+  margin-bottom:clamp(26px,4vh,46px);overflow:hidden;
+}
+.br-switch button{
+  position:relative;z-index:2;appearance:none;background:none;border:0;cursor:pointer;
+  font-family:'Switzer',sans-serif;font-weight:500;font-size:15px;color:var(--br-ink);
+  min-height:52px;padding:0 clamp(16px,2.6vw,34px);transition:color .3s var(--e);
+}
+.br-switch button[aria-checked="true"]{color:var(--paper)}
+.br-switch__ink{
+  position:absolute;z-index:1;top:0;bottom:0;left:0;width:0;background:var(--iron);
+  transition:transform .42s var(--e),width .42s var(--e);
+}
+body.is-night .br-switch__ink{background:var(--iron-lift)}
+/* one grid cell, so the container sizes to the tallest and they cannot collide */
+.br-states{display:grid}
+.br-state{grid-area:1/1;opacity:0;transition:opacity .34s var(--e);pointer-events:none}
+.br-state[hidden]{display:block}
+.br-state.is-on{opacity:1;pointer-events:auto}
+.br-state h3{font-family:'Clash',sans-serif;font-weight:700;font-size:clamp(21px,2.4vw,32px);line-height:1.2;margin:0 0 .4em}
+
+/* ── 8. hvar ──────────────────────────────────────────────────────────── */
+.br-where{padding:clamp(56px,10vh,120px) 0;border-top:1px solid color-mix(in srgb, var(--br-ink) 14%, transparent)}
+.br-where__grid{display:grid;gap:clamp(26px,3.4vw,58px);grid-template-columns:1fr}
+@media (min-width:860px){.br-where__grid{grid-template-columns:1fr 1fr;align-items:start}}
+/* the map is tucked into the column, framed like the page's other media.
+   The filter lives on the WRAPPER, never on the iframe itself. */
+.br-map{
+  position:relative;overflow:hidden;
+  aspect-ratio:4/3;width:100%;
+  border:1px solid color-mix(in srgb, var(--br-ink) 18%, transparent);
+  filter:grayscale(.42) contrast(1.04);
+  transition:filter .5s var(--e);
+}
+.br-map:hover{filter:grayscale(0) contrast(1)}
+.br-map iframe{position:absolute;inset:0;width:100%;height:100%;display:block}
+@media (min-width:860px){
+  .br-where__grid > div:first-child{grid-row:1}
+  .br-map{grid-row:1/3;grid-column:2}
+  .br-where__addr{grid-column:1;grid-row:2}
+}
+.br-where__hours{font-size:15px}
+.br-where__addr{font-style:normal;display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+.br-where__addr a{
+  text-decoration:none;font-weight:500;font-size:17px;
+  min-height:44px;display:inline-flex;align-items:center;
+  border-bottom:1px solid color-mix(in srgb, var(--br-ink) 26%, transparent);
+}
+
+/* ── 9. bókun ─────────────────────────────────────────────────────────── */
+.br-book{padding:clamp(64px,11vh,140px) 0}
+.br-book__grid{display:grid;gap:clamp(26px,3.6vw,64px);grid-template-columns:1fr}
+@media (min-width:900px){.br-book__grid{grid-template-columns:.85fr 1.15fr}}
+.br-form{display:grid;gap:16px;grid-template-columns:1fr}
+@media (min-width:620px){.br-form{grid-template-columns:1fr 1fr}}
+.br-field{display:grid;gap:7px}
+.br-field--wide{grid-column:1/-1}
+.br-field label{font-size:13px;font-weight:500;letter-spacing:.04em;color:var(--br-ink);opacity:.9}
+.br-field input,.br-field textarea{
+  font-family:'Switzer',sans-serif;font-size:16px;color:var(--br-ink);
+  background:color-mix(in srgb, var(--br-ink) 6%, transparent);
+  border:1px solid color-mix(in srgb, var(--br-ink) 32%, transparent);
+  border-radius:var(--r);padding:13px 14px;min-height:48px;width:100%;
+}
+.br-field textarea{min-height:96px;resize:vertical}
+.br-field input::placeholder,.br-field textarea::placeholder{color:var(--br-ink);opacity:.5}
+.br-form .br-btn{grid-column:1/-1;justify-self:start}
+.br-form__msg{grid-column:1/-1;margin:0;font-size:15px;min-height:1.4em;color:var(--iron-lift);opacity:1}
+
+/* ── footer ───────────────────────────────────────────────────────────── */
+.br-foot{padding:clamp(40px,6vh,72px) 0;border-top:1px solid color-mix(in srgb, var(--br-ink) 16%, transparent)}
+.br-foot__grid{display:grid;gap:22px;grid-template-columns:1fr}
+@media (min-width:760px){.br-foot__grid{grid-template-columns:1.4fr 1fr 1fr 1fr;align-items:start}}
+.br-foot__mark{font-family:'Clash',sans-serif;font-weight:700;font-size:clamp(26px,3vw,38px);margin:0;opacity:1}
+.br-foot__col{display:flex;flex-direction:column;gap:8px}
+.br-foot__col a,.br-foot__col p{
+  text-decoration:none;font-size:15px;margin:0;opacity:.82;
+  min-height:44px;display:flex;align-items:center;
+}
+.br-foot__col a:hover{opacity:1}
+
+/* ── reveal ───────────────────────────────────────────────────────────── */
+.br-rv{opacity:0;transform:translate3d(0,26px,0);transition:opacity .8s var(--e),transform .8s var(--e)}
+.br-rv.is-in{opacity:1;transform:none}
+
+/* ── reduced motion: the resting state IS the visible one ─────────────── */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}
+  .br-rv{opacity:1;transform:none}
+  .br-loader{display:none}
+  .br-frame-in{position:absolute;inset:0;width:100%;height:100%;transform:none}
+  .br-hero__seam{transform:none}
+  .br-word{transform:none;opacity:1}
+  .br-film{height:auto}
+  .br-film__inner{position:relative;height:70svh}
+  .br-film__canvas{display:none}
+  .br-film__cap{opacity:1;position:relative;grid-area:auto}
+  .br-film__cap+.br-film__cap{display:none}
+  .br-state{opacity:1;pointer-events:auto;position:static;grid-area:auto;margin-bottom:32px}
+  .br-state[hidden]{display:block}
+}
+
+/* ══ TWO-ROUTE ADDITIONS ═══════════════════════════════════════════════════
+   Everything below is shared by both index.html (Brúin) and hotel.html. Same
+   tokens, same rhythm, same frame device: the two pages must read as one
+   family, because they are one. */
+
+/* screen-reader-only: the visible wordmark is SVG, so the real <h1> is here */
+.br-sr{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0;
+}
+
+.br-menu__alt{margin-top:1.1em;opacity:.62}
+.br-menu-sec__note,.br-rooms__note{
+  font-size:14.5px;margin:-1.2em 0 3.4em;max-width:44ch;
+  /* muted with COLOUR, never opacity: the reduced-motion gate treats a low
+     opacity as a reveal that never fired, and a dimmed note would mask a
+     genuinely stuck block behind a false positive. */
+  opacity:1;color:color-mix(in srgb, var(--br-ink) 62%, transparent);
+}
+
+/* prices sit on the dish row's own baseline, right-aligned against the name */
+.br-dish li{display:grid;grid-template-columns:1fr auto;column-gap:clamp(14px,2vw,32px)}
+.br-dish b{grid-column:1}
+.br-dish span{grid-column:1}
+.br-dish i{
+  grid-column:2;grid-row:1;font-style:normal;white-space:nowrap;
+  font-family:'Switzer',sans-serif;font-weight:500;
+  font-size:clamp(15px,1.3vw,18px);color:var(--br-ink);opacity:.72;
+  padding-top:.42em;
+}
+.br-soup__price{
+  font-family:'Clash',sans-serif;font-weight:500;
+  font-size:clamp(20px,2vw,27px);color:var(--iron);margin:.2em auto .1em;
+}
+body.is-night .br-soup__price{color:var(--iron-lift)}
+
+/* ── Miðaftanhóll ─────────────────────────────────────────────────────── */
+.br-holl{padding:clamp(72px,13vh,150px) 0}
+.br-holl__grid{display:grid;gap:clamp(16px,2.6vw,44px);grid-template-columns:1fr;max-width:1040px;margin-inline:auto}
+@media (min-width:860px){
+  .br-holl__grid{grid-template-columns:1fr 1.15fr;align-items:start}
+  .br-holl__grid .br-eyebrow{grid-column:1;grid-row:1}
+  .br-holl__grid .br-h2{grid-column:1;grid-row:2}
+  .br-holl__body{grid-column:2;grid-row:1/4}
+}
+.br-holl__line b{
+  font-family:'Clash',sans-serif;font-weight:500;
+  font-size:clamp(19px,1.9vw,26px);line-height:1.3;color:var(--iron);
+}
+body.is-night .br-holl__line b{color:var(--iron-lift)}
+.br-holl__src{font-size:13px;opacity:.5;margin-top:2.2em}
+
+/* ── the pair of interiors on Brúin ───────────────────────────────────── */
+.br-house__pair{
+  display:grid;gap:clamp(18px,2.6vw,40px);grid-template-columns:1fr;
+  margin-top:clamp(46px,7vh,90px);
+}
+@media (min-width:760px){.br-house__pair{grid-template-columns:1.6fr 1fr;align-items:end}}
+.br-house__fig{margin:0}
+.br-house__fig .br-frame{height:clamp(240px,42vh,420px)}
+/* the wheel is 256px at source. Framed small on purpose: upscaling a photo
+   past its own detail is how a real photograph starts looking generated. */
+.br-house__fig--small .br-frame{height:clamp(200px,32vh,320px)}
+.br-house__fig figcaption{
+  font-size:14px;opacity:.62;margin-top:1em;max-width:38ch;
+}
+
+/* ── the cross-sell band, both directions ─────────────────────────────── */
+.br-cross{padding:0 0 clamp(64px,11vh,130px)}
+.br-cross__media{position:relative;height:clamp(300px,60vh,620px)}
+.br-cross__grid{padding-top:clamp(34px,5.4vh,66px);display:grid;place-items:center;text-align:center}
+.br-cross .br-h2{max-width:16ch;margin-inline:auto}
+.br-cross p{margin-inline:auto}
+.br-cross .br-btn{margin-top:.9em}
+
+/* ── hótel: herbergin ─────────────────────────────────────────────────── */
+.br-rooms{padding:clamp(72px,13vh,150px) 0}
+.br-rooms__grid{display:grid;gap:clamp(26px,4vw,64px);grid-template-columns:1fr;max-width:1100px;margin-inline:auto}
+@media (min-width:820px){.br-rooms__grid{grid-template-columns:1fr 1fr}}
+.br-room .br-frame{height:clamp(260px,44vh,420px)}
+.br-room__body{padding-top:clamp(18px,2.6vh,30px)}
+.br-room__h{
+  font-family:'Clash',sans-serif;font-weight:500;
+  font-size:clamp(24px,2.4vw,34px);line-height:1.18;letter-spacing:-.012em;
+  color:var(--br-ink);margin:0 0 .5em;
+}
+.br-room__body p{max-width:38ch}
+.br-room__price{
+  font-family:'Clash',sans-serif;font-weight:700;
+  font-size:clamp(26px,2.7vw,38px);color:var(--iron);margin:.7em 0 .1em;
+}
+.br-room__price span{
+  font-family:'Switzer',sans-serif;font-weight:400;font-size:15px;
+  color:var(--br-ink);opacity:.6;letter-spacing:0;
+}
+body.is-night .br-room__price{color:var(--iron-lift)}
+.br-room .br-btn{margin-top:1em}
+/* an honest empty slot, not a stand-in photograph */
+.br-room__slot{
+  height:clamp(260px,44vh,420px);display:grid;place-content:center;justify-items:center;gap:8px;
+  text-align:center;padding:24px;
+  border:1px dashed color-mix(in srgb, var(--br-ink) 30%, transparent);
+  background:color-mix(in srgb, var(--br-ink) 4%, transparent);
+}
+.br-room__slot span{
+  font-family:'Switzer',sans-serif;font-weight:500;font-size:11px;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--br-ink);opacity:.55;
+}
+.br-room__slot small{font-size:13px;opacity:.45;max-width:26ch;line-height:1.5}
+
+/* ── hótel: bókaðu beint ──────────────────────────────────────────────── */
+.br-direct{padding:clamp(72px,13vh,150px) 0}
+.br-direct__grid{display:grid;gap:clamp(28px,4vw,72px);grid-template-columns:1fr}
+@media (min-width:900px){.br-direct__grid{grid-template-columns:.9fr 1.1fr;align-items:start}}
+.br-direct__list{list-style:none;padding:0;margin:2em 0 0;display:grid;gap:.85em}
+.br-direct__list li{
+  position:relative;padding-left:1.5em;font-size:15.5px;opacity:.8;
+}
+.br-direct__list li::before{
+  content:"";position:absolute;left:0;top:.62em;
+  width:10px;height:1px;background:var(--iron);opacity:.85;
+}
+body.is-night .br-direct__list li::before{background:var(--iron-lift)}
+.br-field select{
+  font-family:'Switzer',sans-serif;font-size:16px;color:var(--br-ink);
+  background:color-mix(in srgb, var(--br-ink) 6%, transparent);
+  border:1px solid color-mix(in srgb, var(--br-ink) 32%, transparent);
+  border-radius:var(--r);padding:13px 14px;min-height:48px;width:100%;
+  appearance:none;
+}
+
+/* ── hótel: innifalið ─────────────────────────────────────────────────── */
+.br-incl{padding:0 0 clamp(72px,13vh,150px)}
+.br-incl__grid{
+  list-style:none;padding:0;margin:0;display:grid;gap:0;
+  grid-template-columns:repeat(2,1fr);max-width:900px;margin-inline:auto;
+  border-top:1px solid color-mix(in srgb, var(--br-ink) 18%, transparent);
+}
+@media (min-width:760px){.br-incl__grid{grid-template-columns:repeat(4,1fr)}}
+.br-incl__grid li{
+  padding:clamp(18px,2.6vh,28px) 4px;
+  border-bottom:1px solid color-mix(in srgb, var(--br-ink) 18%, transparent);
+  font-size:15px;opacity:.8;
+}
+
+/* ══ THIRD ROUTE: UM OKKUR ═════════════════════════════════════════════════ */
+
+/* the About link rides in the brand lockup, per Sindri, but must not read as a
+   third PROPERTY — hence the rule instead of an ampersand, and nav-link
+   weight instead of display weight */
+.br-nav__rule{
+  width:1px;height:15px;background:currentColor;opacity:.28;
+  margin-inline:clamp(6px,.9vw,14px);
+}
+.br-nav a.br-nav__about{
+  font-family:'Switzer',sans-serif;font-weight:500;font-size:14px;
+  letter-spacing:.02em;text-decoration:none;opacity:.62;
+  min-height:44px;display:inline-flex;align-items:center;
+  transition:opacity .3s var(--e);
+}
+.br-nav a.br-nav__about:hover,.br-nav a.br-nav__about.is-here{opacity:1}
+
+/* ── the dish rail on the menu ────────────────────────────────────────── */
+.br-rail{
+  display:grid;gap:clamp(12px,1.8vw,26px);grid-template-columns:repeat(3,1fr);
+  max-width:1040px;margin:0 auto clamp(46px,7vh,88px);
+}
+.br-rail figure{margin:0}
+.br-rail .br-frame{height:clamp(150px,26vh,290px)}
+.br-rail figcaption{
+  font-size:13.5px;margin-top:.9em;
+  color:color-mix(in srgb, var(--br-ink) 62%, transparent);
+}
+@media (max-width:620px){
+  .br-rail{grid-template-columns:1fr 1fr}
+  .br-rail figure:last-child{display:none}   /* two reads better than a runt */
+}
+
+/* ── um okkur: an editorial opening, NOT a third wordmark crossing ────── */
+.br-intro{
+  background:var(--ground);color:var(--paper);
+  padding:calc(var(--nav-h) + clamp(60px,12vh,130px)) 0 0;
+}
+.br-intro__grid{display:grid;justify-items:center;text-align:center;padding-bottom:clamp(48px,8vh,100px)}
+.br-intro__top{display:grid;justify-items:center;margin-bottom:clamp(26px,4vh,52px)}
+.br-intro__h{
+  font-family:'Clash',sans-serif;font-weight:700;
+  font-size:clamp(40px,7.4vw,104px);line-height:1.1;letter-spacing:-.022em;
+  margin:0 0 .34em;color:var(--paper);max-width:14ch;
+}
+.br-intro__lede{
+  font-size:clamp(16px,1.5vw,21px);line-height:1.5;
+  color:var(--paper);opacity:.86;max-width:44ch;margin:0;
+}
+.br-intro__media{position:relative;height:clamp(300px,64vh,680px)}
+
+/* ── um okkur: the timeline ───────────────────────────────────────────── */
+.br-story{padding:clamp(72px,13vh,150px) 0}
+.br-story__grid{display:grid;gap:clamp(24px,4vw,72px);grid-template-columns:1fr}
+@media (min-width:900px){.br-story__grid{grid-template-columns:.8fr 1.2fr;align-items:start}}
+.br-time{list-style:none;padding:0;margin:0;display:grid}
+.br-time li{
+  display:grid;grid-template-columns:auto 1fr;gap:clamp(18px,3vw,48px);
+  padding:clamp(22px,3.4vh,36px) 0;
+  border-top:1px solid color-mix(in srgb, var(--br-ink) 18%, transparent);
+}
+.br-time li:last-child{border-bottom:1px solid color-mix(in srgb, var(--br-ink) 18%, transparent)}
+.br-time__y{
+  font-family:'Clash',sans-serif;font-weight:700;
+  font-size:clamp(20px,2vw,28px);color:var(--iron);
+  font-variant-numeric:tabular-nums;
+}
+body.is-night .br-time__y{color:var(--iron-lift)}
+.br-time h3{
+  font-family:'Clash',sans-serif;font-weight:500;
+  font-size:clamp(19px,1.8vw,25px);line-height:1.2;
+  margin:0 0 .45em;color:var(--br-ink);
+}
+.br-time p{margin:0;max-width:46ch}
+
+/* ── um okkur: the two houses ─────────────────────────────────────────── */
+.br-houses{padding:0 0 clamp(72px,13vh,150px)}
+.br-houses__grid{
+  display:grid;gap:clamp(26px,4vw,64px);grid-template-columns:1fr;
+  max-width:1100px;margin-inline:auto;
+}
+@media (min-width:820px){.br-houses__grid{grid-template-columns:1fr 1fr}}
+.br-houses__card .br-frame{height:clamp(240px,40vh,380px);margin-bottom:clamp(16px,2.4vh,28px)}
+.br-houses__card p{max-width:42ch}
+.br-houses__card .br-btn{margin-top:.9em}

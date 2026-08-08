@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>About us · Brúin and Hótel Grindavík</title>
+<meta name="description" content="One family, two houses by the harbour in Grindavík. Restaurant Brúin since 2013 and Hótel Grindavík since 2022, at Hafnargata 26.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#C3D2DD" id="themeColor">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<!-- raster twin: Safari ignores SVG favicons entirely and would fall back to
+     the ORIGIN root icon, i.e. show another client's mark in this tab -->
+<link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/img/favicon-180.png">
+<link rel="preload" href="assets/fonts/ClashDisplay-Bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/Switzer-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" as="image" href="assets/img/husid-full.webp">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="br-root">
+
+<div class="br-loader" id="loader" aria-hidden="true">
+  <p class="br-loader__mark" id="loaderMark">ABOUT US</p>
+  <p class="br-loader__pct" id="loaderPct">0%</p>
+</div>
+
+<header class="br-nav" id="nav">
+  <div class="br-nav__brands">
+    <a class="br-nav__mark" href="index.html">Brúin</a>
+    <span class="br-nav__amp" aria-hidden="true">&amp;</span>
+    <a class="br-nav__mark" href="hotel.html">The hotel</a>
+    <span class="br-nav__rule" aria-hidden="true"></span>
+    <a class="br-nav__about is-here" href="about.html" aria-current="page">About us</a>
+  </div>
+  <nav class="br-nav__links" aria-label="Main menu">
+    <a href="#our-story">Our story</a>
+    <a href="#two-houses">The two houses</a>
+    <a href="#find-us">Find us</a>
+    <a class="br-nav__cta" href="index.html#book">Book a table</a>
+  </nav>
+  <a class="br-nav__tel" href="tel:+3544267080">426 7080</a>
+  <button class="br-burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="menu">
+    <span></span><span></span>
+  </button>
+</header>
+
+<div class="br-menu" id="menu" hidden>
+  <nav aria-label="Menu">
+    <a href="#our-story"><span>Our story</span></a>
+    <a href="#two-houses"><span>The two houses</span></a>
+    <a href="#find-us"><span>Find us</span></a>
+    <a class="br-menu__alt" href="index.html"><span>Restaurant Brúin</span></a>
+    <a class="br-menu__alt" href="hotel.html"><span>Hótel Grindavík</span></a>
+  </nav>
+  <div class="br-menu__foot">
+    <a href="tel:+3544267080">426 7080</a>
+    <a class="br-menu__cta" href="index.html#book">Book a table</a>
+  </div>
+</div>
+
+<main id="top">
+
+<!-- ── 1. opening ─────────────────────────────────────────────────────────
+     Deliberately NOT the wordmark-crossing hero. That device belongs to the two
+     trading pages; a third identical opening would read as a template. This one
+     is editorial: type on the ground, then the building full width. -->
+<section class="br-intro" id="intro">
+  <div class="br-wrap br-intro__grid">
+    <div class="br-intro__top">
+      <p class="br-hero__eyebrow" id="wmTop">Hafnargata 26, Grindavík</p>
+      <span class="br-hero__seam" id="wmSeam" aria-hidden="true"></span>
+    </div>
+    <h1 class="br-intro__h" data-headline>One family, two houses</h1>
+    <p class="br-intro__lede">A restaurant and rooms at the front of the harbour, run by the same family in the same house.</p>
+  </div>
+  <div class="br-intro__media">
+    <div class="br-frame"><img class="br-frame-in" data-drift="16"
+      src="assets/img/husid-full.webp" width="4096" height="3072"
+      alt="Brúin, a low red-clad house by the harbour in Grindavík"
+      fetchpriority="high" decoding="async"></div>
+  </div>
+</section>
+
+<!-- ── 2. sagan ───────────────────────────────────────────────────────────
+     Every date sourced; see _internal/NOTES.md. The evacuation is stated
+     plainly and without eruption imagery, and it remains the OWNERS' call
+     whether it appears publicly at all. -->
+<section class="br-story" id="our-story">
+  <div class="br-wrap br-story__grid">
+    <div class="br-story__intro">
+      <p class="br-eyebrow br-rv">Our story</p>
+      <h2 class="br-h2" data-headline>Since 2013, with one interruption</h2>
+    </div>
+    <ol class="br-time br-rv">
+      <li>
+        <span class="br-time__y">2013</span>
+        <div><h3>Brúin opens</h3>
+          <p>The restaurant opens on Hafnargata in June, a stone's throw from the pier. Fish off the boats in the harbour from the first day.</p></div>
+      </li>
+      <li>
+        <span class="br-time__y">2022</span>
+        <div><h3>The hotel is added</h3>
+          <p>Rooms open in February: double rooms and family rooms with a sleeping loft, with self check-in.</p></div>
+      </li>
+      <li>
+        <span class="br-time__y">2023</span>
+        <div><h3>The town is evacuated</h3>
+          <p>Grindavík is evacuated in November and the house stands empty. Opening again was never a given.</p></div>
+      </li>
+      <li>
+        <span class="br-time__y">2025</span>
+        <div><h3>The lights go back on</h3>
+          <p>The house opens again in June. Coffee on the pot, soup on the menu, and a table by the window facing the harbour.</p></div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ── 3. húsin: the two properties, both routes reachable ──────────────── -->
+<section class="br-houses" id="two-houses">
+  <div class="br-wrap">
+    <h2 class="br-h2" data-headline>The two houses</h2>
+    <div class="br-houses__grid">
+      <article class="br-houses__card br-rv">
+        <div class="br-frame"><img class="br-frame-in" data-drift="10"
+          src="assets/img/supa.webp" width="960" height="960"
+          alt="The Captain's fish soup with rye bread" loading="lazy" decoding="async"></div>
+        <h3 class="br-room__h">Restaurant Brúin</h3>
+        <p>The room seats 135. Fish dishes and the Captain's fish soup, meat dishes and burgers, a children's menu and a play corner. A coffeehouse with home baking, and the bar is always open.</p>
+        <a class="br-btn br-btn--line" href="index.html">Menu and tables</a>
+      </article>
+      <article class="br-houses__card br-rv">
+        <div class="br-frame"><img class="br-frame-in" data-drift="10"
+          src="assets/img/herbergi.webp" width="2000" height="1333"
+          alt="A family room at Hótel Grindavík with a sleeping loft" loading="lazy" decoding="async"></div>
+        <h3 class="br-room__h">Hótel Grindavík</h3>
+        <p>Double rooms and family rooms with a sleeping loft, all with a private bathroom, fridge and free wifi. Self check-in and free parking at the house.</p>
+        <a class="br-btn br-btn--line" href="hotel.html">Rooms and prices</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ── 4. Miðaftanhóll: pointed at, not repeated ────────────────────────── -->
+<section class="br-holl" id="the-hill">
+  <div class="br-wrap br-holl__grid">
+    <p class="br-eyebrow br-rv">Miðaftanhóll</p>
+    <h2 class="br-h2" data-headline>The house stands on a hill</h2>
+    <div class="br-holl__body br-rv">
+      <p class="br-lede">Beneath the restaurant is a hill named Miðaftanhóll, the Hill of Midevening. A hidden couple live in it and look after the area around the hill.</p>
+      <p class="br-holl__line"><b>They own a boat and fish from the harbour.</b></p>
+      <a class="br-btn br-btn--line" href="index.html#the-hill">The whole story</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── 5. hvar ────────────────────────────────────────────────────────── -->
+<section class="br-where" id="find-us">
+  <div class="br-wrap br-where__grid">
+    <div>
+      <h2 class="br-h2" data-headline>Find us</h2>
+      <div class="br-rv">
+        <p class="br-lede">Hafnargata 26, 240 Grindavík. At the front of the harbour, eight kilometres from the Blue Lagoon and 27 km from Keflavík airport.</p>
+        <p class="br-where__hours">Call <a href="tel:+3544267080">426 7080</a> or email <a href="mailto:bruin@simnet.is">bruin@simnet.is</a>.</p>
+      </div>
+    </div>
+    <!-- NOT loading="lazy": see the note on the Brúin page. -->
+    <div class="br-map br-rv">
+      <iframe
+        src="https://www.google.com/maps?q=Hafnargata+26,+240+Grindav%C3%ADk,+Iceland&z=15&output=embed"
+        title="Map: Hafnargata 26, Grindavík"
+        width="600" height="450" style="border:0" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+
+    <address class="br-where__addr br-rv">
+      <a href="https://www.google.com/maps/search/?api=1&query=Hafnargata+26+Grindav%C3%ADk" target="_blank" rel="noopener">Hafnargata 26<br>240 Grindavík</a>
+      <a href="tel:+3544267080">426 7080</a>
+      <a href="mailto:bruin@simnet.is">bruin@simnet.is</a>
+    </address>
+  </div>
+</section>
+
+</main>
+
+<footer class="br-foot">
+  <div class="br-wrap br-foot__grid">
+    <p class="br-foot__mark">Brúin</p>
+    <div class="br-foot__col">
+      <a href="tel:+3544267080">426 7080</a>
+      <a href="mailto:bruin@simnet.is">bruin@simnet.is</a>
+    </div>
+    <div class="br-foot__col"><p>Hafnargata 26<br>240 Grindavík</p></div>
+    <div class="br-foot__col">
+      <a href="index.html">Restaurant Brúin</a>
+      <a href="hotel.html">Hótel Grindavík</a>
+      <a href="about.html">About us</a>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/vendor/lenis.min.js"></script>
+<script src="assets/vendor/gsap.min.js"></script>
+<script src="assets/vendor/ScrollTrigger.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
