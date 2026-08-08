@@ -699,3 +699,71 @@ body.is-night .br-time__y{color:var(--iron-lift)}
 .br-houses__card .br-frame{height:clamp(240px,40vh,380px);margin-bottom:clamp(16px,2.4vh,28px)}
 .br-houses__card p{max-width:42ch}
 .br-houses__card .br-btn{margin-top:.9em}
+
+/* ══ THE LANDING: TWO DOORS ════════════════════════════════════════════════
+   The fork comes before any pitch. Equal weight to both businesses — whichever
+   one is smaller on the balance sheet, the visitor's intent decides, not us. */
+.br-doors{
+  display:grid;grid-template-columns:1fr;min-height:100svh;
+  background:var(--ground);
+  padding-top:var(--nav-h);
+}
+@media (min-width:860px){.br-doors{grid-template-columns:1fr 1fr}}
+
+.br-door{
+  position:relative;display:grid;align-content:end;
+  min-height:min(52svh,520px);
+  padding:clamp(26px,4vw,64px);
+  text-decoration:none;color:var(--paper);overflow:hidden;isolation:isolate;
+}
+@media (min-width:860px){.br-door{min-height:calc(100svh - var(--nav-h))}}
+.br-door__media{position:absolute;inset:0;z-index:-2}
+.br-door__media img{width:100%;height:100%;object-fit:cover;
+  transform:scale(1.04);transition:transform 1.1s var(--e),filter .6s var(--e);
+  filter:saturate(.92) brightness(.86);
+}
+/* the scrim is a gradient, not a flat wash: flat enough to read the copy at the
+   bottom, clear enough at the top that the photograph still sells the room */
+.br-door::after{
+  content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:linear-gradient(to top, rgba(24,20,16,.88) 0%, rgba(24,20,16,.52) 42%, rgba(24,20,16,.18) 100%);
+  transition:opacity .5s var(--e);
+}
+/* a seam between the two doors so neither reads as the page background */
+@media (min-width:860px){
+  .br-door + .br-door{box-shadow:inset 1px 0 0 rgba(228,224,209,.16)}
+}
+.br-door:hover .br-door__media img,
+.br-door:focus-visible .br-door__media img{transform:scale(1.10);filter:saturate(1) brightness(.94)}
+.br-door:hover::after,.br-door:focus-visible::after{opacity:.82}
+.br-door:focus-visible{outline:2px solid var(--iron-over);outline-offset:-6px}
+
+.br-door__eyebrow{
+  font-family:'Switzer',sans-serif;font-weight:500;font-size:11px;
+  letter-spacing:.28em;text-transform:uppercase;
+  color:var(--paper);opacity:.7;margin:0 0 .9em;
+}
+.br-door__h{
+  font-family:'Clash',sans-serif;font-weight:700;
+  font-size:clamp(44px,6.4vw,104px);line-height:1;letter-spacing:-.022em;
+  margin:0 0 .28em;color:var(--paper);
+  /* Icelandic acute clearance, same reason as the hero wordmark */
+  padding-top:.06em;
+}
+.br-door__sub{
+  color:var(--paper);opacity:.9;margin:0 0 1.5em;max-width:34ch;
+  font-size:clamp(15px,1.15vw,17.5px);line-height:1.5;
+}
+.br-door__go{
+  display:inline-flex;align-items:center;gap:.6em;min-height:44px;
+  font-family:'Switzer',sans-serif;font-weight:500;font-size:15px;
+  color:var(--paper);
+  border-bottom:1px solid rgba(228,224,209,.5);
+  padding-bottom:2px;transition:border-color .3s var(--e),gap .3s var(--e);
+}
+.br-door__go::after{content:'→';transition:transform .3s var(--e)}
+.br-door:hover .br-door__go{border-color:var(--paper);gap:.85em}
+.br-door:hover .br-door__go::after{transform:translateX(3px)}
+
+/* the landing's own intro sits on the page palette, not the door ground */
+.br-doors + .br-intro{padding-top:clamp(64px,11vh,130px)}
