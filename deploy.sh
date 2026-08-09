@@ -16,7 +16,14 @@ ORIGIN="${PREVIEW_ORIGIN:-https://sindrimar02.github.io/bruin-hotel-preview}"
 # the first would need a force push — and a force push is exactly what the
 # backup guard blocks, for good reason. Continuing the existing branch keeps the
 # history linear, so a plain push always works and nothing is ever rewritten.
+# ALWAYS clean up the worktree, including on a failed gate. `set -e` exits
+# before the removal line at the bottom, and the leaked worktree then holds the
+# gh-pages branch so the NEXT run dies with "already used by worktree".
+cleanup() { cd "$REPO" 2>/dev/null || true; git worktree remove --force "$WT" 2>/dev/null || true; git worktree prune 2>/dev/null || true; }
+trap cleanup EXIT
+
 git -C "$REPO" fetch -q origin gh-pages 2>/dev/null || true
+git -C "$REPO" worktree prune 2>/dev/null || true
 git -C "$REPO" worktree add --detach -q "$WT"
 cd "$WT"
 if git -C "$REPO" rev-parse --verify -q origin/gh-pages >/dev/null; then
@@ -89,7 +96,6 @@ git -c user.email=sindri@klubbr.is -c user.name="Sindri Már" \
     commit -q -m "Deploy $(git -C "$REPO" rev-parse --short HEAD) (noindex preview)" || echo "(nothing changed)"
 git push -q origin gh-pages
 cd "$REPO"
-git worktree remove --force "$WT"
 echo "published to $ORIGIN"
 
 # GATE 7 — on-disk correct is not proof the client sees an icon: the Pages CDN
