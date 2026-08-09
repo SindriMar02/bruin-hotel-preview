@@ -15,6 +15,94 @@
 <link rel="preload" href="assets/fonts/ClashDisplay-Bold.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/Switzer-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" href="assets/img/herbergi.webp">
+
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "Hotel",
+ "@id": "https://sindrimar02.github.io/bruin-hotel-preview/hotel.html#hotel",
+ "name": "Hótel Grindavík",
+ "url": "https://sindrimar02.github.io/bruin-hotel-preview/hotel.html",
+ "telephone": "+354-426-7080",
+ "email": "bruin@simnet.is",
+ "address": {
+  "@type": "PostalAddress",
+  "streetAddress": "Hafnargata 26",
+  "addressLocality": "Grindavík",
+  "postalCode": "240",
+  "addressCountry": "IS"
+ },
+ "geo": {
+  "@type": "GeoCoordinates",
+  "latitude": 63.838,
+  "longitude": -22.4338
+ },
+ "image": "https://sindrimar02.github.io/bruin-hotel-preview/assets/img/herbergi.webp",
+ "description": "Self check-in rooms by the harbour in Grindavík, eight kilometres from the Blue Lagoon. Double rooms and family rooms with a sleeping loft.",
+ "petsAllowed": false,
+ "currenciesAccepted": "ISK",
+ "amenityFeature": [
+  {
+   "@type": "LocationFeatureSpecification",
+   "name": "Free WiFi",
+   "value": true
+  },
+  {
+   "@type": "LocationFeatureSpecification",
+   "name": "Free parking",
+   "value": true
+  },
+  {
+   "@type": "LocationFeatureSpecification",
+   "name": "Self check-in",
+   "value": true
+  },
+  {
+   "@type": "LocationFeatureSpecification",
+   "name": "Private bathroom",
+   "value": true
+  }
+ ],
+ "makesOffer": [
+  {
+   "@type": "Offer",
+   "name": "Family room",
+   "price": "42000",
+   "priceCurrency": "ISK",
+   "itemOffered": {
+    "@type": "HotelRoom",
+    "name": "Family room",
+    "bed": {
+     "@type": "BedDetails",
+     "typeOfBed": "Double"
+    },
+    "occupancy": {
+     "@type": "QuantitativeValue",
+     "maxValue": 4
+    }
+   }
+  },
+  {
+   "@type": "Offer",
+   "name": "Double room",
+   "price": "32000",
+   "priceCurrency": "ISK",
+   "itemOffered": {
+    "@type": "HotelRoom",
+    "name": "Double room",
+    "bed": {
+     "@type": "BedDetails",
+     "typeOfBed": "Double"
+    },
+    "occupancy": {
+     "@type": "QuantitativeValue",
+     "maxValue": 2
+    }
+   }
+  }
+ ]
+}
+</script>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body class="br-root">
