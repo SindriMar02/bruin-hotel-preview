@@ -767,3 +767,15 @@ body.is-night .br-time__y{color:var(--iron-lift)}
 
 /* the landing's own intro sits on the page palette, not the door ground */
 .br-doors + .br-intro{padding-top:clamp(64px,11vh,130px)}
+
+/* ── headlines that live in a NARROW GRID COLUMN ──────────────────────────
+   .br-h2 is sized in vw, which is correct for a full-width heading and wrong
+   for one sitting in a ~400px column: at 1440 it rendered at 72px inside 399px
+   and towered five lines down the page, past the body text beside it. Size
+   these to the COLUMN, not the viewport. */
+.br-holl__grid .br-h2,
+.br-story__grid .br-h2{
+  font-size:clamp(28px,3vw,46px);
+  line-height:1.14;
+  max-width:14ch;
+}
