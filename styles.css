@@ -209,63 +209,66 @@ p{margin:0 0 1em;max-width:62ch;color:var(--br-ink);opacity:.82}
 }
 
 /* ── 1. hero ──────────────────────────────────────────────────────────────
-   The photograph fills the viewport but is CLIPPED to a centred crop; the clip
-   opens to full bleed as you scroll. The wordmark sits above it in
-   mix-blend-mode: difference, so it inverts whatever passes beneath, pixel by
-   pixel, instead of switching to a flat second colour.
-   HARD CONSTRAINT: transform, opacity or clip-path on the wordmark or ANY
-   ancestor inside the hero creates a stacking context and the blend stops
-   seeing the panel. Nothing above it may be animated at rest.
+   Full-bleed photograph from the first frame, one centred wordmark on it.
+   Every scroll and pointer effect is transform/opacity on its OWN element, so
+   no two tweens ever write the same property:
+     .br-hero__media  intro settle (scale) + pointer drift (x/y)
+     .br-hero__img    scroll push-in (scale/yPercent)
+     .br-hero__mask   scroll lift + fade, pointer counter-drift (x)
+     .br-ch           the intro letter rise
+     .br-hero__shade  scroll darkening
    ──────────────────────────────────────────────────────────────────────── */
 .br-hero{
-  --panel-w:min(42vw,520px);
-  --panel-h:min(62svh,620px);
   position:relative;min-height:100svh;overflow:hidden;
-  background:var(--ground);
-  isolation:isolate;            /* confine the blend to the hero */
+  background:var(--ground);color:var(--paper);isolation:isolate;
 }
-.br-hero__panel{
-  position:absolute;inset:0;
-  clip-path:inset(var(--clip-y,22%) var(--clip-x,33%));
+.br-hero__media{position:absolute;inset:-3%;will-change:transform}
+.br-hero__img{
+  width:100%;height:100%;object-fit:cover;object-position:center 58%;
+  filter:saturate(.9);will-change:transform;
 }
-.br-hero__panel .br-frame,.br-hero__panel .br-frame-in,.br-hero__panel video{
-  width:100%;height:100%;object-fit:cover;
+/* legibility without a flat wash: dark at the nav and the foot, a soft pool
+   behind the wordmark, the house itself left bright */
+.br-hero__media::after{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(60% 42% at 50% 52%, rgba(24,20,16,.34), rgba(24,20,16,0) 70%),
+    linear-gradient(to bottom, rgba(24,20,16,.62) 0%, rgba(24,20,16,.12) 30%, rgba(24,20,16,.2) 56%, rgba(24,20,16,.7) 80%, rgba(24,20,16,.9) 100%);
 }
+.br-hero__shade{position:absolute;inset:0;background:var(--ground);opacity:0;pointer-events:none}
 
-/* THE WORDMARK, in three layers.
-   1. the plain photograph, clipped to the crop that opens on scroll
-   2. the paper letters, as SVG text
-   3. the SAME photograph again, poured into those same letterforms and graded
-      down, so that where a letter crosses the picture the letter IS the
-      picture. The crop and the letters open together, so the word fills with
-      photograph as the picture arrives instead of just changing colour. */
-.br-hero__wmsvg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-.br-hero__wmtext{fill:var(--paper)}
-.br-hero__glyph{
-  position:absolute;inset:0;
-  clip-path:url(#wmGlyphs);
-  /* the letters are backed with the cladding's own deep red. A photograph
-     poured straight in matches the luminance of the photograph AROUND it
-     wherever the picture is dark, and the word vanishes into its own
-     background; the backing holds a constant ink under the texture. */
+/* the wordmark is centred on the hero box itself, independent of the rows */
+.br-hero__wm{
+  position:absolute;inset:0;z-index:2;margin:0;
+  display:grid;place-items:center;pointer-events:none;
+  font-family:'Clash',sans-serif;font-weight:700;line-height:1;
+  font-size:clamp(64px,22vw,340px);letter-spacing:-.03em;color:var(--paper);
 }
-/* the ink lives on the inner layer, because that is the one carrying the crop.
-   On the outer layer it would paint every letter at once, including the ones
-   standing on bare ground outside the picture. */
-.br-hero__glyph-in{
-  position:absolute;inset:0;
-  clip-path:inset(var(--clip-y,22%) var(--clip-x,33%));
-  background:var(--iron-over);
+.br-hero--wide .br-hero__wm{font-size:clamp(46px,14vw,236px)}
+.br-hero__mask{
+  display:flex;white-space:nowrap;
+  /* the clip that the letters rise through. Top padding clears the Ú acute;
+     right padding = |letter-spacing|, because negative tracking hangs the last
+     glyph's ink past the box and would pull the word visibly right of centre */
+  overflow:hidden;padding:.16em .03em .04em 0;margin-top:-.12em;
+  will-change:transform;
 }
-/* no url() clip support (or no JS): the paper wordmark alone still reads */
-.no-glyphclip .br-hero__glyph{display:none}
+.br-ch{display:inline-block;will-change:transform}
+.br-ch--sp{width:.34em}
+/* the room photograph is pale plaster behind the letters: a deeper pool there */
+.br-hero--wide .br-hero__media::after{
+  background:
+    radial-gradient(64% 36% at 50% 50%, rgba(24,20,16,.52), rgba(24,20,16,0) 72%),
+    linear-gradient(to bottom, rgba(24,20,16,.62) 0%, rgba(24,20,16,.18) 30%, rgba(24,20,16,.22) 56%, rgba(24,20,16,.7) 80%, rgba(24,20,16,.9) 100%);
+}
 
 .br-hero__copy{
-  position:relative;width:100%;height:100svh;
+  position:relative;z-index:3;width:100%;height:100svh;
   padding:calc(var(--nav-h) + 14px) var(--pad) clamp(26px,5vh,54px);
-  text-align:center;color:var(--paper);
+  text-align:center;color:var(--paper);pointer-events:none;
   display:grid;grid-template-rows:auto 1fr auto;justify-items:center;align-items:center;
 }
+.br-hero__copy a{pointer-events:auto}
 .br-hero__top,.br-hero__foot{position:relative;z-index:3;display:grid;justify-items:center}
 /* explicit rows: the only in-flow children are these two, and the wordmark's
    row must stay empty between them */
@@ -285,13 +288,18 @@ p{margin:0 0 1em;max-width:62ch;color:var(--br-ink);opacity:.82}
   color:var(--paper);opacity:.92;font-size:clamp(15px,1.2vw,18px);
   max-width:32ch;margin:0 0 1.6em;
 }
-/* the room is a landscape photograph and the portrait slice cropped the loft
-   stair out of it. Wider crop, same crossing — the panel only has to stay
-   narrower than the wordmark, not narrow in absolute terms. */
-.br-hero--wide{--panel-w:min(56vw,760px);--panel-h:min(54svh,520px)}
-@media (max-width:760px){
-  .br-hero{--panel-w:min(44vw,200px);--panel-h:min(46svh,380px)}
-  .br-hero--wide{--panel-w:min(58vw,226px);--panel-h:min(30svh,230px)}
+/* button hover: the fill wipes up from the baseline instead of snapping on */
+.br-btn--solid,.br-btn--line,.br-btn--ghost,.br-btn--onDark{position:relative;isolation:isolate;overflow:hidden}
+.br-btn--solid::before,.br-btn--line::before,.br-btn--ghost::before,.br-btn--onDark::before{
+  content:'';position:absolute;inset:0;z-index:-1;background:var(--br-ink);
+  transform:scaleY(0);transform-origin:50% 100%;
+  transition:transform .28s cubic-bezier(.23,1,.32,1);
+}
+.br-btn--onDark::before{background:var(--paper)}
+@media (hover:hover) and (pointer:fine){
+  .br-btn--solid:hover,.br-btn--line:hover,.br-btn--ghost:hover{background:transparent}
+  .br-btn--onDark:hover{background:transparent}
+  .br-btn:hover::before{transform:scaleY(1)}
 }
 
 /* ── 2. opið aftur ────────────────────────────────────────────────────── */
@@ -733,9 +741,20 @@ body.is-night .br-time__y{color:var(--iron-lift)}
 @media (min-width:860px){
   .br-door + .br-door{box-shadow:inset 1px 0 0 rgba(228,224,209,.16)}
 }
-.br-door:hover .br-door__media img,
-.br-door:focus-visible .br-door__media img{transform:scale(1.10);filter:saturate(1) brightness(.94)}
-.br-door:hover::after,.br-door:focus-visible::after{opacity:.82}
+/* a flat dim layer, used only to step the OTHER door back on hover */
+.br-door::before{
+  content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:rgba(20,17,13,.5);opacity:0;transition:opacity .3s cubic-bezier(.23,1,.32,1);
+}
+.br-door__body > *{transition:transform .3s cubic-bezier(.23,1,.32,1)}
+@media (hover:hover) and (pointer:fine){
+  .br-door:hover .br-door__media img{transform:scale(1.08);filter:saturate(1) brightness(.94)}
+  .br-door:hover::after{opacity:.82}
+  .br-doors:has(.br-door:hover) .br-door:not(:hover)::before{opacity:1}
+  .br-door:hover .br-door__h{transform:translate3d(0,-6px,0)}
+  .br-door:hover .br-door__sub{transform:translate3d(0,-3px,0)}
+}
+.br-door:focus-visible .br-door__media img{transform:scale(1.08)}
 .br-door:focus-visible{outline:2px solid var(--iron-over);outline-offset:-6px}
 
 .br-door__eyebrow{
@@ -762,8 +781,10 @@ body.is-night .br-time__y{color:var(--iron-lift)}
   padding-bottom:2px;transition:border-color .3s var(--e),gap .3s var(--e);
 }
 .br-door__go::after{content:'→';transition:transform .3s var(--e)}
-.br-door:hover .br-door__go{border-color:var(--paper);gap:.85em}
-.br-door:hover .br-door__go::after{transform:translateX(3px)}
+@media (hover:hover) and (pointer:fine){
+  .br-door:hover .br-door__go{border-color:var(--paper)}
+  .br-door:hover .br-door__go::after{transform:translateX(5px)}
+}
 
 /* the landing's own intro sits on the page palette, not the door ground */
 .br-doors + .br-intro{padding-top:clamp(64px,11vh,130px)}
