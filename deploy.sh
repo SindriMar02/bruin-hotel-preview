@@ -87,7 +87,7 @@ grep -q 'hotel.html' restaurant.html || { echo "BLOCKED: restaurant does not lin
 grep -q 'restaurant.html' hotel.html || { echo "BLOCKED: hotel does not link the restaurant"; exit 1; }
 # GATE 6 — a preview shipping without a usable favicon shows the ARTIX helm from
 # the origin root in the client's tab. Checks the STAGED tree, byte-for-byte.
-node "$REPO"/../_tools/favicon-guard.mjs "$WT"
+node "$REPO"/../../_tools/favicon-guard.mjs "$WT"
 
 echo "staged: $(find . -path ./.git -prune -o -type f -print | wc -l | tr -d ' ') files, $(du -sh --exclude=.git . 2>/dev/null | cut -f1 || du -sh . | cut -f1)"
 
@@ -100,4 +100,4 @@ echo "published to $ORIGIN"
 
 # GATE 7 — on-disk correct is not proof the client sees an icon: the Pages CDN
 # takes a minute. Check the DEPLOYED url. Polls ~3 min.
-node "$REPO"/../_tools/favicon-verify-live.mjs "$ORIGIN/"
+node "$REPO"/../../_tools/favicon-verify-live.mjs "$ORIGIN/"
