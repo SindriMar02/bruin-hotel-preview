@@ -149,43 +149,27 @@
 
 <main id="top">
 
-<!-- ── 1. hero: same crossing device as Brúin, aimed at the other house ────
-     Their best photograph by a distance (6166x4111 at source), and the only
-     one on either site that was shot by somebody who knew what they were
-     doing. It earns the full-bleed opening. -->
+<!-- ── 1. hero: the same full-bleed hero as Brúin, aimed at the other house ─
+     Their best photograph by a distance (6166x4111 at source). -->
 <section class="br-hero br-hero--wide" id="hero">
-  <div class="br-hero__panel">
-    <img class="br-frame-in br-frame-in--hero" src="assets/img/herbergi.webp"
+  <div class="br-hero__media" id="heroMedia">
+    <img class="br-hero__img" id="heroImg" src="assets/img/herbergi.webp"
       width="2000" height="1333"
       alt="A family room with a sleeping loft, pale wooden stair, double bed and sofa"
       fetchpriority="high" decoding="async">
   </div>
+  <div class="br-hero__shade" id="heroShade" aria-hidden="true"></div>
 
-  <svg class="br-hero__wmsvg" id="wmSvg" aria-hidden="true" focusable="false">
-    <text class="br-hero__wmtext" id="wmGlyphText" text-anchor="middle"
-          font-family="Clash, sans-serif" font-weight="700" letter-spacing="-0.018em" font-size="120">THE HOTEL</text>
-  </svg>
-
-  <div class="br-hero__glyph" id="heroGlyph" aria-hidden="true">
-    <div class="br-hero__glyph-in"></div>
-  </div>
-  <svg class="br-hero__defs" aria-hidden="true" focusable="false" width="0" height="0">
-    <defs><clipPath id="wmGlyphs" clipPathUnits="userSpaceOnUse">
-      <!-- the strike is offset on the CLIP, never by moving the layer. Translating
-           the element would drag its crop clip along with it, so the boundary
-           between "on the picture" and "off it" would slide off the picture's
-           own edge by the same few pixels and read as a registration fault. -->
-      <use href="#wmGlyphText" id="wmGlyphUse" x="0" y="0"></use>
-    </clipPath></defs>
-  </svg>
+  <h1 class="br-hero__wm">
+    <span class="br-sr">Hótel Grindavík, rooms by the harbour</span>
+    <span class="br-hero__mask" id="heroMask" aria-hidden="true"><span class="br-ch">T</span><span class="br-ch">H</span><span class="br-ch">E</span><span class="br-ch br-ch--sp"></span><span class="br-ch">H</span><span class="br-ch">O</span><span class="br-ch">T</span><span class="br-ch">E</span><span class="br-ch">L</span></span>
+  </h1>
 
   <div class="br-hero__copy">
     <div class="br-hero__top">
       <p class="br-hero__eyebrow" id="wmTop">Hótel Grindavík</p>
       <span class="br-hero__seam" id="wmSeam" aria-hidden="true"></span>
     </div>
-
-    <h1 class="br-sr">Hótel Grindavík, rooms by the harbour</h1>
 
     <div class="br-hero__foot">
       <p class="br-hero__sub">Self check-in, free parking, and eight kilometres to the Blue Lagoon.</p>

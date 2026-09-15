@@ -260,48 +260,28 @@
 
 <main id="top">
 
-<!-- ── 1. hero: the roofline seam births the name ───────────────────────── -->
+<!-- ── 1. hero: the house, full bleed, the name centred on it ───────────── -->
 <section class="br-hero" id="hero">
-  <!-- the photograph is a CENTRED CROP, not full bleed: the wordmark crosses it,
-       and the crossing is the whole point of the hero -->
-  <div class="br-hero__panel">
-    <img class="br-frame-in br-frame-in--hero" src="assets/img/husid-hero.webp"
+  <div class="br-hero__media" id="heroMedia">
+    <img class="br-hero__img" id="heroImg" src="assets/img/husid-hero.webp"
       width="1800" height="782"
       alt="Restaurant Brúin, a red-clad house by the harbour in Grindavík"
       fetchpriority="high" decoding="async">
   </div>
+  <div class="br-hero__shade" id="heroShade" aria-hidden="true"></div>
 
-  <!-- the paper letters. SVG, not HTML text, so the very same <text> node can
-       also serve as the clip path below — see the three-layer note in the CSS -->
-  <svg class="br-hero__wmsvg" id="wmSvg" aria-hidden="true" focusable="false">
-    <text class="br-hero__wmtext" id="wmGlyphText" text-anchor="middle"
-          font-family="Clash, sans-serif" font-weight="700" letter-spacing="-0.018em" font-size="120">BRÚIN</text>
-  </svg>
+  <!-- the wordmark is plain HTML text, centred on the VIEWPORT (not a grid row
+       that the nav offsets), one span per letter so the intro can rise them -->
+  <h1 class="br-hero__wm">
+    <span class="br-sr">Brúin, seafood restaurant by the harbour in Grindavík</span>
+    <span class="br-hero__mask" id="heroMask" aria-hidden="true"><span class="br-ch">B</span><span class="br-ch">R</span><span class="br-ch">Ú</span><span class="br-ch">I</span><span class="br-ch">N</span></span>
+  </h1>
 
-  <!-- the crossing: the letters fill with their own cladding profile -->
-  <div class="br-hero__glyph" id="heroGlyph" aria-hidden="true">
-    <div class="br-hero__glyph-in"></div>
-  </div>
-  <svg class="br-hero__defs" aria-hidden="true" focusable="false" width="0" height="0">
-    <defs><clipPath id="wmGlyphs" clipPathUnits="userSpaceOnUse">
-      <!-- the strike is offset on the CLIP, never by moving the layer. Translating
-           the element would drag its crop clip along with it, so the boundary
-           between "on the picture" and "off it" would slide off the picture's
-           own edge by the same few pixels and read as a registration fault. -->
-      <use href="#wmGlyphText" id="wmGlyphUse" x="0" y="0"></use>
-    </clipPath></defs>
-  </svg>
-
-  <!-- three rows. The eyebrow sits ABOVE the panel and the copy BELOW it, both
-       on the dark ground where paper ink reads ~14:1. The middle row is left
-       empty: it is the crossing, and nothing else should sit on the picture. -->
   <div class="br-hero__copy">
     <div class="br-hero__top">
       <p class="br-hero__eyebrow" id="wmTop">Restaurant by the harbour</p>
       <span class="br-hero__seam" id="wmSeam" aria-hidden="true"></span>
     </div>
-
-    <h1 class="br-sr">Brúin, seafood restaurant by the harbour in Grindavík</h1>
 
     <div class="br-hero__foot">
       <p class="br-hero__sub">Fish off the boats in the harbour, seating for 135 and a view over the ocean.</p>

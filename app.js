@@ -181,124 +181,87 @@
       invalidateOnRefresh: true
     });
 
-    /* THE SEAM + THE OPENING CROP.
-       The wordmark itself is NEVER animated: it carries mix-blend-mode, and a
-       transform/opacity/clip on it or any ancestor inside the hero would create
-       a stacking context and stop the blend seeing the picture. So the intro
-       animates the seam and the eyebrow (a sibling subtree), and the scroll
-       animates the PANEL's clip, which opens the crop out to full bleed. */
+    /* THE INTRO. Runs once, after the loader leaves (or at once without one). */
     var seam = document.getElementById('wmSeam');
     var wmTop = document.getElementById('wmTop');
     var heroEl = document.getElementById('hero');
-    var panel = document.querySelector('.br-hero__panel');
+    var heroMedia = document.getElementById('heroMedia');
+    var heroImg = document.getElementById('heroImg');
+    var heroMask = document.getElementById('heroMask');
+    var heroShade = document.getElementById('heroShade');
+    var heroFoot = heroEl ? heroEl.querySelector('.br-hero__foot') : null;
+    var letters = heroMask ? heroMask.querySelectorAll('.br-ch') : [];
+    var doors = document.querySelectorAll('.br-door');
+    var onReveal = function (fn) {
+      if (document.getElementById('loader')) window.addEventListener('br:revealed', fn, { once: true });
+      else gsap.delayedCall(0.12, fn);
+    };
 
     if (seam && wmTop) {
       gsap.set(seam, { scaleX: 0 });
       gsap.set(wmTop, { opacity: 0, y: 12 });
-      var openFromTheLine = function () {
-        gsap.timeline()
-          .to(seam, { scaleX: 1, duration: 0.9, ease: 'expo.out' })
-          .to(wmTop, { opacity: .9, y: 0, duration: 1.0, ease: 'expo.out' }, '-=0.55');
-      };
-      if (document.getElementById('loader')) {
-        window.addEventListener('br:revealed', openFromTheLine, { once: true });
-      } else {
-        gsap.delayedCall(0.12, openFromTheLine);
-      }
+    }
+    if (letters.length) gsap.set(letters, { yPercent: 108 });
+    if (heroMedia) gsap.set(heroMedia, { scale: 1.12 });
+    if (heroFoot) gsap.set(heroFoot, { opacity: 0, y: 18 });
+
+    /* the doors open from the seam between them: each photograph grows out of
+       the shared edge (side by side on desktop, stacked on a phone) */
+    var doorMedia = [], doorBodies = [];
+    if (doors.length === 2) {
+      var sideBySide = window.matchMedia('(min-width:860px)').matches;
+      var shut = sideBySide ? ['inset(0% 0% 0% 100%)', 'inset(0% 100% 0% 0%)']
+                            : ['inset(100% 0% 0% 0%)', 'inset(0% 0% 100% 0%)'];
+      doors.forEach(function (d, i) {
+        var m = d.querySelector('.br-door__media');
+        doorMedia.push(m);
+        gsap.set(m, { clipPath: shut[i] });
+        doorBodies.push(d.querySelectorAll('.br-door__body > *'));
+      });
+      gsap.set(doorBodies, { opacity: 0, y: 22 });
     }
 
-    /* the crop opens to full bleed across the hero's own scroll range */
-    if (panel && heroEl) {
-      /* THE PANEL'S RESTING SIZE LIVES HERE, not in the stylesheet.
-         An unregistered custom property comes back from getComputedStyle as the
-         literal string 'min(42vw,520px)', so parseFloat gives NaN and the old
-         code fell through to its hardcoded fallback every single time. The CSS
-         tokens looked authoritative and changed nothing; only these numbers
-         ever reached the screen. One source of truth, and the stylesheet's
-         inset() percentages are now only the pre-JS resting frame. */
-      var PANEL = {
-        wide:   { w: [0.56, 760], h: [0.54, 520], mw: [0.58, 226], mh: [0.30, 230] },
-        normal: { w: [0.42, 520], h: [0.62, 620], mw: [0.44, 200], mh: [0.46, 380] }
-      };
-      var startClip = function () {
-        var vw = window.innerWidth, vh = window.innerHeight;
-        var p = PANEL[heroEl.classList.contains('br-hero--wide') ? 'wide' : 'normal'];
-        var mob = vw <= 760;
-        var pw = Math.min(vw * (mob ? p.mw[0] : p.w[0]), mob ? p.mw[1] : p.w[1]);
-        var ph = Math.min(vh * (mob ? p.mh[0] : p.h[0]), mob ? p.mh[1] : p.h[1]);
-        return {
-          x: Math.max(0, (100 - (pw / vw) * 100) / 2),
-          y: Math.max(0, (100 - (ph / vh) * 100) / 2)
-        };
-      };
-      /* ONE pair of custom properties on the hero drives BOTH copies of the
-         photograph: the plain one behind the letters, and the graded one that
-         is clipped to the letterforms. Writing them on the shared ancestor is
-         what keeps the two in register — two independently-written clips drift
-         apart by a pixel or two and the drift reads as a printing error. */
-      var writeClip = function (progress) {
-        var c = startClip(), k = 1 - progress;
-        heroEl.style.setProperty('--clip-x', (c.x * k).toFixed(2) + '%');
-        heroEl.style.setProperty('--clip-y', (c.y * k).toFixed(2) + '%');
-      };
-      var applyStart = function () { writeClip(0); };
+    onReveal(function () {
+      var tl = gsap.timeline();
+      if (heroMedia) tl.to(heroMedia, { scale: 1, duration: 2.2, ease: 'expo.out' }, 0);
+      if (letters.length) tl.to(letters, { yPercent: 0, duration: 1.2, ease: 'expo.out', stagger: 0.06 }, 0.1);
+      if (seam && wmTop) {
+        tl.to(seam, { scaleX: 1, duration: 0.9, ease: 'expo.out' }, 0.35)
+          .to(wmTop, { opacity: .9, y: 0, duration: 1.0, ease: 'expo.out' }, 0.5);
+      }
+      if (heroFoot) tl.to(heroFoot, { opacity: 1, y: 0, duration: 1.0, ease: 'expo.out' }, 0.7);
+      if (doorMedia.length) {
+        tl.to(doorMedia, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.4, ease: 'expo.inOut', stagger: 0.08,
+          onComplete: function () { gsap.set(doorMedia, { clearProps: 'clipPath' }); } }, 0)
+          .to(doorBodies[0], { opacity: 1, y: 0, duration: 0.9, ease: 'expo.out', stagger: 0.06 }, 0.8)
+          .to(doorBodies[1], { opacity: 1, y: 0, duration: 0.9, ease: 'expo.out', stagger: 0.06 }, 0.88);
+      }
+    });
 
-      /* The wordmark is SVG, not HTML text, because the same <text> has to do
-         two jobs at once: paint the paper letters, and BE the clip path that
-         the graded photograph is poured into. A <use> of the rendered node
-         guarantees the two are the same geometry — matching an HTML span's
-         glyph box by measurement never survives a font swap or a resize. */
-      var wmText = document.getElementById('wmGlyphText');
-      var wmUse = document.getElementById('wmGlyphUse');
-      var CAP = 0.72;                   // Clash Display cap height, in em
-      var syncWordmark = function () {
-        if (!wmText) return;
-        var r = heroEl.getBoundingClientRect();
-        /* font-size is written as an ATTRIBUTE, not left to the stylesheet.
-           The clip path consumes this node through <use>, and a class-based
-           font-size is not guaranteed to reach a use-shadow clone — when it
-           doesn't, the clip silently falls back to 16px and the picture pours
-           into letters a fifth of the size of the visible ones. */
-        var fs = Math.max(84, Math.min(window.innerWidth * 0.235, 340));
-        wmText.setAttribute('font-size', fs.toFixed(1));
-        /* then shrink to fit: 'HÓTELIÐ' is seven characters against 'BRÚIN's
-           five, so one shared clamp cannot serve both wordmarks. Measure the
-           rendered run and scale down if it would reach the page margins. */
-        var room = r.width * 0.88;
-        if (wmText.getComputedTextLength) {
-          var w = wmText.getComputedTextLength();
-          if (w > room && w > 0) {
-            fs = Math.max(52, fs * (room / w));
-            wmText.setAttribute('font-size', fs.toFixed(1));
-          }
-        }
-        wmText.setAttribute('x', (r.width / 2).toFixed(1));
-        // centre the CAPS optically, not the em box: uppercase-only text sits
-        // high in its em square and a plain middle leaves it visibly above centre
-        wmText.setAttribute('y', (r.height / 2 + fs * CAP * 0.5).toFixed(1));
-        /* the offset strike is a RATIO of the letter size, not a fixed pixel
-           nudge: 10px is a confident letterpress double-strike on a 260px
-           wordmark and a blurry edge artefact on a 74px one. Offsetting the
-           <use> shifts the INK's letterforms while the crop clip on the layer
-           below stays locked to the photograph's real edge. */
-        var strike = (fs * 0.038).toFixed(1);
-        if (wmUse) { wmUse.setAttribute('x', strike); wmUse.setAttribute('y', strike); }
-      };
-      syncWordmark();
-      if (document.fonts && document.fonts.ready) document.fonts.ready.then(syncWordmark);
+    /* THE SCROLL. The picture pushes in and darkens while the name lifts away;
+       all scrubbed to the hero's own height, all transform/opacity. */
+    if (heroEl && heroImg && heroMask) {
+      var st = { trigger: heroEl, start: 'top top', end: 'bottom top', scrub: 0.6 };
+      gsap.fromTo(heroImg, { scale: 1, yPercent: 0 }, { scale: 1.14, yPercent: 7, ease: 'none', scrollTrigger: st });
+      gsap.fromTo(heroMask, { yPercent: 0, opacity: 1 }, { yPercent: -60, opacity: 0, ease: 'none',
+        scrollTrigger: { trigger: heroEl, start: 'top top', end: '70% top', scrub: 0.6 } });
+      if (heroShade) gsap.fromTo(heroShade, { opacity: 0 }, { opacity: 0.7, ease: 'none', scrollTrigger: st });
+      var copyEls = heroEl.querySelectorAll('.br-hero__top, .br-hero__foot > *');
+      gsap.fromTo(copyEls, { opacity: 1 }, { opacity: 0, ease: 'none', immediateRender: false,
+        scrollTrigger: { trigger: heroEl, start: '8% top', end: '45% top', scrub: 0.6 } });
 
-      ScrollTrigger.create({
-        // opens over just over half a viewport, so the picture is fully out
-        // before the hero starts leaving rather than arriving as it goes
-        trigger: heroEl, start: 'top top', end: '+=58%',
-        scrub: 0.5, invalidateOnRefresh: true,
-        onRefresh: applyStart,
-        onUpdate: function (self) { writeClip(self.progress); }
-      });
-      writeClip(0);                     // paint the resting state before any scroll
-      window.addEventListener('resize', function () {
-        writeClip(0); syncWordmark();
-      }, { passive: true });
+      /* THE POINTER. A fine pointer drifts the picture a few pixels one way and
+         the name the other: depth without a gimmick. Touch never sees it. */
+      if (window.matchMedia('(hover:hover) and (pointer:fine)').matches && heroMedia) {
+        var mx = gsap.quickTo(heroMedia, 'x', { duration: 1.1, ease: 'power3.out' });
+        var my = gsap.quickTo(heroMedia, 'y', { duration: 1.1, ease: 'power3.out' });
+        var wx = gsap.quickTo(heroMask, 'x', { duration: 1.3, ease: 'power3.out' });
+        heroEl.addEventListener('pointermove', function (e) {
+          var nx = e.clientX / window.innerWidth - 0.5, ny = e.clientY / window.innerHeight - 0.5;
+          mx(nx * -22); my(ny * -14); wx(nx * 10);
+        }, { passive: true });
+        heroEl.addEventListener('pointerleave', function () { mx(0); my(0); wx(0); });
+      }
     }
 
     /* word-mask rises */
@@ -527,7 +490,7 @@
     var mark = document.getElementById('loaderMark');
     var pctEl = document.getElementById('loaderPct');
     var t0 = performance.now(), shownPct = 0;
-    var hero = document.querySelector('.br-hero__panel img');
+    var hero = document.getElementById('heroImg');
     var heroDone = hero ? hero.complete : true;
     var fontsDone = false;
     if (hero && !heroDone) {

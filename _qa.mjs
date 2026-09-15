@@ -107,49 +107,32 @@ await at(0);
 await sleep(700);
 const seam = await page.evaluate(() => {
   const s = document.getElementById('wmSeam');
-  const t = document.getElementById('wmGlyphText');
-  const g = document.getElementById('heroGlyph');
-  const hero = document.getElementById('hero');
-  const bb = t ? t.getBBox() : null;
-  return {
-    seamScale: s ? getComputedStyle(s).transform : 'none',
-    glyphClip: g ? getComputedStyle(g).clipPath : '',
-    fontSize: t ? parseFloat(t.getAttribute('font-size')) : 0,
-    textW: bb ? bb.width : 0,
-    heroW: hero ? hero.getBoundingClientRect().width : 0,
-  };
+  return { seamScale: s ? getComputedStyle(s).transform : 'none' };
 });
 // matrix(a,...) where a is scaleX. "not none" is NOT enough: a fully-erased
 // seam reports matrix(0,0,0,1,0,0) and would pass that weaker check.
 const sx = (() => { const m = seam.seamScale.match(/matrix\(([-\d.]+)/); return m ? parseFloat(m[1]) : (seam.seamScale === 'none' ? 1 : NaN); })();
 log(sx >= 0.9, 'seam drew', `scaleX ${sx}`);
 
-/* ── 3b. the wordmark's glyph clip is actually wired ──────────────────────
-   The failure this catches is silent and ugly: if the <use> clone never picks
-   up a font-size, the clip falls back to 16px and the photograph pours into a
-   row of letters a fifth of the size of the visible ones, off to one side. */
-const glyphOK = /url\(/.test(seam.glyphClip) && seam.fontSize > 60
-  && seam.textW > seam.heroW * 0.25;
-if (HAS_HERO) log(glyphOK, 'wordmark glyph-clip is wired and full size',
-  `clip ${seam.glyphClip} font ${seam.fontSize}px run ${Math.round(seam.textW)}px of ${Math.round(seam.heroW)}`);
-
-/* ── 3c. the crossing actually crosses ────────────────────────────────────
-   Measures the RENDERED crop, never the --panel-w token: that token is an
-   unresolved min() string, and for a while it was being silently discarded
-   while hardcoded JS constants drew the panel. If the crop is ever wider than
-   the wordmark, the letters sit entirely inside the picture and the whole
-   hero device disappears into one flat colour. */
+/* ── 3b. the wordmark is centred, risen and inside the viewport ───────────
+   Measures the glyph RANGE, not the box: negative tracking hangs ink past the
+   box edge, which is exactly how the old wordmark read off centre. */
 if (HAS_HERO) {
-  const cross = await page.evaluate(() => {
+  await sleep(1400);
+  const wm = await page.evaluate(() => {
+    const m = document.getElementById('heroMask');
     const hero = document.getElementById('hero');
-    const t = document.getElementById('wmGlyphText');
-    const cx = parseFloat(getComputedStyle(hero).getPropertyValue('--clip-x')) || 0;
-    const panelW = innerWidth * (1 - 2 * cx / 100);
-    return { panelW: Math.round(panelW), runW: Math.round(t.getBBox().width) };
+    const r = document.createRange(); r.selectNodeContents(m);
+    const ink = r.getBoundingClientRect(), h = hero.getBoundingClientRect();
+    const risen = [...m.querySelectorAll('.br-ch')].every(c => Math.abs(c.getBoundingClientRect().top - m.querySelector('.br-ch').getBoundingClientRect().top) < 2
+      && c.getBoundingClientRect().top < m.getBoundingClientRect().bottom);
+    return { off: (ink.left + ink.width / 2) - (h.left + h.width / 2), left: ink.left, right: ink.right,
+      vw: innerWidth, fs: parseFloat(getComputedStyle(m).fontSize), risen };
   });
-  const margin = Math.round((cross.runW - cross.panelW) / 2);
-  log(margin >= 30, 'wordmark overhangs the crop on both sides',
-    `run ${cross.runW}px vs crop ${cross.panelW}px, ${margin}px each side`);
+  log(Math.abs(wm.off) <= wm.vw * 0.01, 'wordmark is horizontally centred', `${wm.off.toFixed(1)}px off centre`);
+  log(wm.left >= 8 && wm.right <= wm.vw - 8 && wm.fs > 40, 'wordmark fits the viewport',
+    `ink ${Math.round(wm.left)}-${Math.round(wm.right)} of ${wm.vw}, ${wm.fs}px`);
+  log(wm.risen, 'wordmark letters have risen', wm.risen ? 'all in line' : 'letters still masked');
 }
 
 /* ── 4. word-mask headlines resolve ───────────────────────────────────── */
